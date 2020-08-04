@@ -1,8 +1,8 @@
 import socket
 from time import strftime, gmtime
-from config import HOST, POSTPORT, BUF_SIZE
+from config import HOST, RECEIVEPORT, BUF_SIZE
 
-ADDRESS = (HOST, POSTPORT)
+ADDRESS = (HOST, RECEIVEPORT)
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_socket.bind(ADDRESS)
 server_socket.listen(1)
