@@ -20,11 +20,12 @@ haku-bot，利用go-cqhttp在龙芯和其他平台快速构建的QQ机器人
 ## 实现的功能
 
 1. 在终端打印消息日志
-2. 实现的 api 见 botApi.py
+2. 实现的 api 见 hakuCore/botApi.py
 
 ## 使用到的库
 
 + json
++ math
 + socket
 + time
 

@@ -6,7 +6,8 @@ def main (msgList):
 bc [args]
 echo [args]
 help
-ping'''
+ping
+time [args]'''
     if msgList['message_type'] == 'private':
         send_private_message(msgList['user_id'], helpMsg)
     elif msgList['message_type'] == 'group':
