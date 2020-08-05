@@ -1,14 +1,14 @@
 # HTTP server buf, don't touch it!
-BUF_SIZE = 2048
+BUF_SIZE = 1024
 
 # test tcpSend qq id
-TESTQQID = 2521857263
+TESTQQID = -1
 
 # post_urls host
 HOST = '127.0.0.1'
 # post_urls port
-RECEIVEPORT = 5701
+RECEIVEPORT = 5751
 # http_config port
-SENDPORT = 5700
+SENDPORT = 5750
 # access_token
 TOKEN = 'inuyasha'

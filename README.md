@@ -1,6 +1,6 @@
 # MiraiGo-hakuBot
 
-haku-bot，利用go-cqhttp快速构建的QQ机器人
+haku-bot，利用go-cqhttp在龙芯和其他平台快速构建的QQ机器人
 
 ## 依赖于
 
@@ -15,9 +15,18 @@ haku-bot，利用go-cqhttp快速构建的QQ机器人
 
 在 ``config.py`` 中设置监听的地址和端口等即可。
 
+``python3 server.py`` 运行。
+
 ## 实现的功能
 
-在终端打印收到的 raw_message
+1. 在终端打印消息日志
+2. 实现的 api 见 botApi.py
+
+## 使用到的库
+
++ json
++ socket
++ time
 
 ## 参考资料
 
