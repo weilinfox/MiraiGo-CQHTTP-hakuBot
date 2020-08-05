@@ -13,7 +13,7 @@ haku-bot，利用go-cqhttp在龙芯和其他平台快速构建的QQ机器人
 
 ## 快速上手
 
-在 ``config.py`` 中设置监听的地址和端口等即可。
+在 ``hakuCore/config.py`` 中设置监听的地址和端口等即可。
 
 ``python3 server.py`` 运行。
 

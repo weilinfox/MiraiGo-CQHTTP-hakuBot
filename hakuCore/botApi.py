@@ -3,7 +3,7 @@
 # retcode 为 -1 同时 status 为 tcpSendError 则函数发生未知错误
 # 其他值则代表其他错误，具体见 coolq-http-api 的文档，发生错误时 data 字段无数据
 
-from tcpSend import uploadMessage
+from hakuCore.tcpSend import uploadMessage
 
 # 发送私聊消息
 def send_private_message (userId, message, auto_escape=False):

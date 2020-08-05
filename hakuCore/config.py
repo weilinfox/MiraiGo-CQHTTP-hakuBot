@@ -1,5 +1,5 @@
 # HTTP server buf, don't touch it!
-BUF_SIZE = 1024
+BUF_SIZE = 2048
 
 # test tcpSend qq id
 TESTQQID = -1

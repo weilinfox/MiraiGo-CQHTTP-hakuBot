@@ -1,8 +1,8 @@
 import socket
 import json
 from time import strftime, gmtime
-from config import HOST, RECEIVEPORT, BUF_SIZE
-from hakuCore import haku
+from hakuCore.config import HOST, RECEIVEPORT, BUF_SIZE
+from hakuCore.hakuCore import haku
 
 ADDRESS = (HOST, RECEIVEPORT)
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -42,12 +42,12 @@ while True:
             postBody += postData
 
         # 响应
-        timeStr = strftime("Date: %a, %m %b %Y %H:%M:%S GMT", gmtime())
-        rplStr = REPLY + timeStr + "\r\n\r\n"
+        timeStr = strftime("%a, %m %b %Y %H:%M:%S GMT", gmtime())
+        rplStr = REPLY + 'Date: ' + timeStr + "\r\n\r\n"
         client_socket.send(rplStr.encode('utf-8', errors='ignore'))
 
         postBody = postBody.decode('utf-8')
-        print('\n[', timeStr, '](收到): ', postBody)
+        print('\n[', timeStr, '](收到):', postBody)
 
         try:
             haku(json.loads(postBody))

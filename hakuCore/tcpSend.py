@@ -1,14 +1,14 @@
 import socket
 import json
 from time import strftime, gmtime
-from config import HOST, SENDPORT, BUF_SIZE, TOKEN, TESTQQID
+from hakuCore.config import HOST, SENDPORT, BUF_SIZE, TOKEN, TESTQQID
 
 ADDRESS = (HOST, SENDPORT)
 
 def sendMessage (msg):
     try:
-        timeStr = strftime("Date: %a, %m %b %Y %H:%M:%S GMT", gmtime())
-        print('\n[', timeStr, '](发送): ', msg, end='')
+        timeStr = strftime("%a, %m %b %Y %H:%M:%S GMT", gmtime())
+        print('\n[', timeStr, '](发送):', msg, end='')
         server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server_socket.connect(ADDRESS)
         server_socket.send(msg.encode('utf-8', errors='ignore'))
@@ -53,9 +53,39 @@ def encodePost (apiStr, dataDict):
 
 def encodeGet (apiStr, dataDict):
     msg = 'GET /' + apiStr + '?access_token=' + TOKEN
+    mainmsg = ''
     for key in dataDict.keys():
-        msg += '&' + key + '=' + str(dataDict[key])
-    return msg + ' HTTP/1.0\r\n\r\n'
+        prtmsg = str(dataDict[key])
+        prtmsg = prtmsg.replace('%', '%25')
+        prtmsg = prtmsg.replace('&', '%26')
+        prtmsg = prtmsg.replace('=', '%3D')
+        mainmsg += '&' + key + '=' + prtmsg
+    mainmsg = mainmsg.replace('+', '%2B')
+    mainmsg = mainmsg.replace(' ', "%20")
+    mainmsg = mainmsg.replace('/', '%2F')
+    mainmsg = mainmsg.replace('#', '%23')
+    mainmsg = mainmsg.replace('?', '%3F')
+    mainmsg = mainmsg.replace('!', '%21')
+    mainmsg = mainmsg.replace('*', '%2A')
+    mainmsg = mainmsg.replace('"', '%22')
+    mainmsg = mainmsg.replace("'", '%27')
+    mainmsg = mainmsg.replace('(', '%28')
+    mainmsg = mainmsg.replace(')', '%29')
+    mainmsg = mainmsg.replace(';', '%3B')
+    mainmsg = mainmsg.replace(':', '%3A')
+    mainmsg = mainmsg.replace('@', '%40')
+    mainmsg = mainmsg.replace('$', '%24')
+    mainmsg = mainmsg.replace(',', '%2C')
+    mainmsg = mainmsg.replace('\n', '%0A')
+    # 好像为了防止冲突应该替换成其他字符，但是我忘了
+    mainmsg = mainmsg.replace('[', '%5B')
+    mainmsg = mainmsg.replace(']', '%5D')
+    mainmsg = mainmsg.replace('{', '%7B')
+    mainmsg = mainmsg.replace('}', '%7D')
+
+    msg += mainmsg + ' HTTP/1.0\r\n\r\n'
+    
+    return msg
 
 def uploadMessage (apiStr, dataDict):
     # 使用Get方法，模拟HTTP/1.0
