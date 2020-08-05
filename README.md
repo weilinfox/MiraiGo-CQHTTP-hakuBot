@@ -1,4 +1,4 @@
-# MiraiGo-hakuBot
+# MiraiGo-CQHTTP-hakuBot
 
 haku-bot，利用go-cqhttp在龙芯和其他平台快速构建的QQ机器人
 
