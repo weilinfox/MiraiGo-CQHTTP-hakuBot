@@ -8,6 +8,7 @@ from quitAll import quitNow, setQuit
 
 def main():
     ADDRESS = (HOST, RECEIVEPORT)
+    print('Listen', HOST + ':' + str(RECEIVEPORT))
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.bind(ADDRESS)
     server_socket.listen(1)

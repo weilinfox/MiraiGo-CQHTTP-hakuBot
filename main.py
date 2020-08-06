@@ -11,6 +11,7 @@ def sendQuitPackage():
         ADDRESS = (hakuCore.config.HOST, hakuCore.config.RECEIVEPORT)
         msg = 'POST / HTTP/1.0\r\nX-Self-Id: 1009\r\nConnect-Length: 0\r\n\r\n'
         server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        #server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         server_socket.connect(ADDRESS)
         server_socket.send(msg.encode('utf-8', errors='ignore'))
         rpyMsg = server_socket.recv(hakuCore.config.BUF_SIZE);
