@@ -5,7 +5,18 @@
 from importlib import import_module
 from hakuCore.botApi import *
 
+def newMsgLog():
+    try:
+        plgs = import_module('plugins.log')
+    except:
+        pass
+    else:
+        plgs.insert()
+    return
+
 def haku (msgDict):
+    newMsgLog()
+    
     # 分发命令
     if (msgDict['raw_message'][0] == ':'):
         req = list(msgDict['raw_message'].split(' ', 1))

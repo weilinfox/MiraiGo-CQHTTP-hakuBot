@@ -9,6 +9,7 @@ haku-bot，利用go-cqhttp在龙芯和其他平台快速构建的QQ机器人
 
 ## 使用到的库
 
++ importlib
 + json
 + math
 + socket
@@ -56,7 +57,7 @@ Connect-Length: 0
 
 ### 两个线程
 
-``main.py`` 创建了两个线程分别运行 ``server.py`` 和 ``timer.py`` 。 ``server.py`` 监听 go-cqhttp 的上报并将接收到的 json 转换为 dict ； ``timer.py`` 则提取当前时间，当当前时间和设定时间相同时触发相应事件，创建相应的 dict 。这个 dict 会被发送给 ``hakuCore/hakuCore.py`` 处理回应或调用 plugins 包下的相应插件回应。
+``main.py`` 创建了两个线程分别运行 ``server.py`` 和 ``timer.py`` 。 ``server.py`` 监听 go-cqhttp 的上报并将接收到的 json 转换为 dict ； ``timer.py`` 则提取当前时间，当当前时间和设定时间相同时触发相应事件，创建相应的 dict 。这个 dict 会被发送给 ``hakuCore/hakuCore.py`` 处理回应或再将其发送给 plugins 包下的相应插件回应。
 
 ### hakuCore
 
@@ -70,6 +71,18 @@ hakuCore 包是机器人的核心内涵，其中 ``config.py`` 用于参数设�
 + "raw_message" 信息，收到的信息
 + "message" 同"raw_message"
 + "self_id" 机器人自己的qq号
+
+### 插件开发
+
+所有插件在 plugins 目录下，命令名即文件名，使用“:”+命令名调用。如 ``ping`` 命令，对应插件名为 ``ping.py`` ，当hakuBot收到 ``:ping`` 时自动调用这个插件。
+
+插件必须包含一个 ``main()`` 方法，其具有一个参数，当调用时会传给 ``main()`` 一个 dict ，这个 dict 包含这个事件的所有信息，其格式上面已经阐述。 ``main()`` 方法不需要返回值，即使有返回值也会被忽略。
+
+插件可以做任何事，包括自由调用 ``plugins`` 和 ``hakuCore`` 下的任何模块。常见的是调用 ``hakuCore.botApi`` 下的方法发送消息进行回应。
+
+虽然hakuBot还没有实现多线程，但最好还是考虑下多线程下可能出现的bug。
+
+具体可以参考已经编写好的插件。
 
 ## 实现的功能
 
@@ -89,6 +102,7 @@ hakuCore 包是机器人的核心内涵，其中 ``config.py`` 用于参数设�
 
 + go-cqhttp 需要交叉编译为 mips64le 。暂时没有官方的 mips64le release。
 + 程序中只是使用 socket 模拟了 http 协议的通信，虽然写 HTTP/1.0 但实际并没有完全遵循任何标准。
++ 只有在 ``main.py`` 调用 ``server.py`` 和 ``timer.py`` 时创建了两个线程，所以整个程序实际是阻塞式的。
 
 
 By SDUST weilinfox
