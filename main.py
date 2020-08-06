@@ -39,7 +39,6 @@ if timerThread.isAlive() and serverThread.isAlive():
     try:
         while timerThread.isAlive() or serverThread.isAlive():
             time.sleep(1)
-            pass
     except KeyboardInterrupt:
         # Ctrl+C 退出
         setQuit()
@@ -60,7 +59,7 @@ elif timerThread.isAlive():
     print('Quit flag setted.')
     print('Waiting for threads...')
     while timerThread.isAlive() or serverThread.isAlive():
-        pass
+        time.sleep(1)
     print('\nWill now quit.\n')
 elif serverThread.isAlive():
     print("\ntimer.py start FAILED!")
@@ -68,7 +67,7 @@ elif serverThread.isAlive():
     print('Quit flag setted.')
     print('Waiting for threads...')
     while timerThread.isAlive() or serverThread.isAlive():
-        pass
+        time.sleep(1)
     print('Will now quit.\n')
 else:
     print("\ntimer.py and server.py start FAILED!\n")

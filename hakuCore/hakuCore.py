@@ -4,15 +4,15 @@
 
 from importlib import import_module
 from hakuCore.botApi import *
+from hakuCore.logging import printLog
 
 def newMsgLog():
     try:
         plgs = import_module('plugins.log')
     except:
-        pass
+        printLog('ERROR', 'hakuCore.py: in newMsgLog()')
     else:
         plgs.insert()
-    return
 
 def haku (msgDict):
     newMsgLog()
@@ -23,7 +23,7 @@ def haku (msgDict):
         try:
             plgs = import_module('plugins.'+req[0][1:])
         except:
-            pass
+            printLog('DEBUG', 'hakuCore.py: in haku, no such plugin: ' + req[0][1:])
         else:
             plgs.main(msgDict)
             return

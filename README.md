@@ -61,7 +61,7 @@ Connect-Length: 0
 
 ### hakuCore
 
-hakuCore 包是机器人的核心内涵，其中 ``config.py`` 用于参数设置， ``hakuCore.py`` 对所有信息进行处理和分发， ``botApi.py`` 作为回应 go-cqhttp 的接口， ``tcpSend.py`` （通常不需要手动调用）向 go-cqhttp 发送包。
+hakuCore 包是机器人的核心内涵，其中 ``config.py`` 用于参数设置， ``hakuCore.py`` 对所有信息进行处理和分发， ``botApi.py`` 作为回应 go-cqhttp 的接口， ``tcpSend.py`` （通常不需要手动调用）向 go-cqhttp 发送包， ``logging.py`` 打印自定义的日志。
 
 ``hakuCore.py`` 接受一个 dict ，这个 dict 和 go-cqhttp 上报的 json 格式一致，主要包含：
 
@@ -86,11 +86,25 @@ hakuCore 包是机器人的核心内涵，其中 ``config.py`` 用于参数设�
 
 ## 实现的功能
 
+### 主程序
+
 1. 在终端打印接收到消息的整个dict
 2. 在终端打印发送消息的整个GET请求
-3. 部分api可以通过函数调用
+3. 在终端打印错误信息
+4. 定时在终端打印机器人流量
+5. 部分api可以通过函数调用
 
 已经函数实现的 api 见 hakuCore/botApi.py
+
+### 插件
+
++ about 回复关于信息
++ help 回复帮助信息
++ ping 检测机器人是否在工作
++ echo 人类的本质
++ time 回复指定时区的当前时间
++ bc 简单的四则运算计算器
++ log 计量机器人的流量
 
 ## 参考资料
 

@@ -34,5 +34,5 @@ def main (msgDict):
         else:
             send_group_message(msgDict['group_id'], ans)
 
-if __name__ == '__main__':
-    main({'message_type':'private', 'user_id':2521857263, 'raw_message':':time'})
+#if __name__ == '__main__':
+#    main({'message_type':'private', 'user_id':-1, 'raw_message':':time'})

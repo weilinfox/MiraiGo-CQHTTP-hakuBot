@@ -3,6 +3,7 @@ import json
 from time import strftime, gmtime
 from hakuCore.config import HOST, RECEIVEPORT, BUF_SIZE
 from hakuCore.hakuCore import haku
+from hakuCore.logging import printLog
 from quitAll import quitNow, setQuit
 
 def main():
@@ -45,6 +46,7 @@ def main():
             timeStr = strftime("%a, %m %b %Y %H:%M:%S GMT", gmtime())
             rplStr = REPLY + 'Date: ' + timeStr + "\r\n\r\n"
             client_socket.send(rplStr.encode('utf-8', errors='ignore'))
+            client_socket.close()
 
             if myId != 1009:
                 postBody = postBody.decode('utf-8')
@@ -52,13 +54,13 @@ def main():
                 try:
                     haku(json.loads(postBody))
                 except:
-                    pass
+                    printLog('ERROR', 'server.py: haku(json.loads(postBody))')
             else:
                 print('\n[', timeStr, '](收到):', '收到包要求程序退出!')
                 setQuit()
 
         except:
-            pass
+            printLog('ERROR', 'server.py: in main loop')
 
     server_socket.close()
     print("\nBye~ from server")
