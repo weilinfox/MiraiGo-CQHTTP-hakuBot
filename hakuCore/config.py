@@ -1,7 +1,7 @@
 # HTTP server buf, don't touch it!
 BUF_SIZE = 2048
 
-# test tcpSend qq id
+# test qq id
 TESTQQID = -1
 
 # post_urls host
@@ -12,3 +12,6 @@ RECEIVEPORT = 5751
 SENDPORT = 5750
 # access_token
 TOKEN = 'inuyasha'
+
+# timer interval seconds (Just an estimation)
+INTERVAL = 10

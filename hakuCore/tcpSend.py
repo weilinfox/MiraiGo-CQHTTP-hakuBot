@@ -92,12 +92,13 @@ def uploadMessage (apiStr, dataDict):
     return sendMessage(encodeGet(apiStr, dataDict))
 
 
-if __name__ == '__main__':
+# 目录结构改变，这部分失效
+#if __name__ == '__main__':
     #api = "send_group_msg"
-    api = "send_private_msg"
-    dataDict = {'user_id':TESTQQID, 'message': 'ping'}
+    #api = "send_private_msg"
+    #dataDict = {'user_id':TESTQQID, 'message': 'ping'}
     #print('\n****post request****\n\n', encodePost(api, dataDict))
     #print('\n****sendMessage return****\n\n', sendMessage(encodePost(api, dataDict)))
 
-    print('\n****get request****\n\n', encodeGet(api, dataDict))
-    print('\n****sendMessage return (-1: error)****\n\n', uploadMessage(api, dataDict), '\n')
+    #print('\n****get request****\n\n', encodeGet(api, dataDict))
+    #print('\n****sendMessage return (-1: error)****\n\n', uploadMessage(api, dataDict), '\n')

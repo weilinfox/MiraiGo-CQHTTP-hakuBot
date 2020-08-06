@@ -399,13 +399,13 @@ def GETMSG(self):
                     ans += "\n" + s + " ==> " + bcMain(s)
     return ans
 
-def main (msgList):
-    self = list(msgList['raw_message'].split())
+def main (msgDict):
+    self = list(msgDict['raw_message'].split())
     retn = GETMSG(self)
-    if msgList['message_type'] == 'private':
-        send_private_message(msgList['user_id'], retn)
-    elif msgList['message_type'] == 'group':
-        send_group_message(msgList['group_id'], retn)
+    if msgDict['message_type'] == 'private':
+        send_private_message(msgDict['user_id'], retn)
+    elif msgDict['message_type'] == 'group':
+        send_group_message(msgDict['group_id'], retn)
 
 
 #代码段
