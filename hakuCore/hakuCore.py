@@ -45,7 +45,8 @@ def haku (msgDict):
                 break
     elif msgDict.get('notice_type') and msgDict['notice_type'] == 'group_recall':
         #send_group_message(msgDict['group_id'], '{CQ:at,id=' + str(msgDict['user_id']) + '}' + '\n又有人怀孕了(小声)')
-        send_group_message(msgDict['group_id'], '又有人怀孕了(小声)')
+        #send_group_message(msgDict['group_id'], '又有人怀孕了(小声)')
+        pass
 
     # 主动复读
     if msgDict.get('raw_message') and msgDict['message_type'] == 'group':

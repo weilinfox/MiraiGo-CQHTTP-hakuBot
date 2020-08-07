@@ -3,6 +3,7 @@ from importlib import import_module
 from hakuCore.config import INTERVAL
 from hakuCore.logging import printLog
 from quitAll import quitNow
+import hakuCore.timeEvent
 
 def checkMsgLog():
     try:
@@ -26,6 +27,7 @@ def main():
     nmsgr = '0/min'
     while not quitNow():
         try:
+            #hakuCore.timeEvent.main()
             sleep(INTERVAL)
             checkMsgLog()
             nmsgr = getMsgRate()
