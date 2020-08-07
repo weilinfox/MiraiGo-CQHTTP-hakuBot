@@ -21,6 +21,49 @@ def sendQuitPackage():
         server_socket.close()
         print('Quit package send ERROR!')
 
+def judgeServerStatus():
+    global serverThread, timerThread
+    if timerThread.isAlive() and serverThread.isAlive():
+        return True
+    elif timerThread.isAlive():
+        print("\nserver.py start FAILED!\n")
+
+        #重试5次
+        retry = 0
+        while retry < 5 and not serverThread.isAlive():
+            print('Try to restart it within 15 seconds. (' + str(retry+1) + '/5)')
+            time.sleep(15)
+            #time.sleep(5)
+            retry += 1
+            print('Try to restart server.py ...')
+            serverThread = threading.Thread(target=server.main, daemon=True)
+            serverThread.start()
+            time.sleep(2)
+            if serverThread.isAlive():
+                print('Restart successfully!\n')
+                return True
+            else:
+                print("server.py restart FAILED!\n")
+
+        print('Give up.')
+        setQuit()
+        print('Quit flag setted.')
+        print('Waiting for threads...')
+        while timerThread.isAlive() or serverThread.isAlive():
+            time.sleep(1)
+    elif serverThread.isAlive():
+        print("\ntimer.py start FAILED!")
+        setQuit()
+        print('Quit flag setted.')
+        print('Waiting for threads...')
+        while timerThread.isAlive() or serverThread.isAlive():
+            time.sleep(1)
+    else:
+        print("\ntimer.py and server.py start FAILED!\n")
+        
+    return False
+    
+
 # 配置文件检查
 print("\nCheck for config errors.")
 
@@ -33,10 +76,12 @@ serverThread = threading.Thread(target=server.main, daemon=True)
 timerThread.start()
 serverThread.start()
 
+# 等待初始化完成
 time.sleep(2)
 
-if timerThread.isAlive() and serverThread.isAlive():
+if judgeServerStatus():
     print("Successful! Press Ctrl+C to quit.\n")
+    #print(timerThread.isAlive(), serverThread.isAlive())
     try:
         while timerThread.isAlive() or serverThread.isAlive():
             time.sleep(1)
@@ -51,27 +96,10 @@ if timerThread.isAlive() and serverThread.isAlive():
     print('Waiting for threads...')
     while timerThread.isAlive() or serverThread.isAlive():
         time.sleep(1)
-    print('\nWill now quit.\n')
 
+
+print('\nWill now quit.\n')
     
-elif timerThread.isAlive():
-    print("\nserver.py start FAILED!")
-    setQuit()
-    print('Quit flag setted.')
-    print('Waiting for threads...')
-    while timerThread.isAlive() or serverThread.isAlive():
-        time.sleep(1)
-    print('\nWill now quit.\n')
-elif serverThread.isAlive():
-    print("\ntimer.py start FAILED!")
-    setQuit()
-    print('Quit flag setted.')
-    print('Waiting for threads...')
-    while timerThread.isAlive() or serverThread.isAlive():
-        time.sleep(1)
-    print('Will now quit.\n')
-else:
-    print("\ntimer.py and server.py start FAILED!\n")
-    print('Will now quit.\n')
+
 
 

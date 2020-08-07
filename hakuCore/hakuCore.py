@@ -4,13 +4,13 @@
 
 from importlib import import_module
 from hakuCore.botApi import *
-from hakuCore.logging import printLog
+import hakuCore.logging
 
 def newMsgLog():
     try:
         plgs = import_module('plugins.log')
     except:
-        printLog('ERROR', 'hakuCore.py: in newMsgLog()')
+        hakuCore.logging.printLog('ERROR', 'hakuCore.py: in newMsgLog()')
     else:
         plgs.insert()
 
@@ -18,23 +18,23 @@ def haku (msgDict):
     newMsgLog()
     
     # 分发命令
-    if (msgDict['raw_message'][0] == ':'):
+    if (msgDict.get('raw_message') and msgDict['raw_message'][0] == ':'):
         req = list(msgDict['raw_message'].split(' ', 1))
         try:
             plgs = import_module('plugins.'+req[0][1:])
         except:
-            printLog('DEBUG', 'hakuCore.py: in haku, no such plugin: ' + req[0][1:])
+            hakuCore.logging.printLog('DEBUG', 'hakuCore.py: in haku, no such plugin: ' + req[0][1:])
         else:
             plgs.main(msgDict)
             return
 
     # 命令以外的处理
-    if msgDict['raw_message'].strip() == '小白':
+    if msgDict.get('raw_message') and msgDict['raw_message'].strip() == '小白':
         if msgDict['message_type'] == 'private':
             send_private_message(msgDict['user_id'], '小白在呢~')
         elif msgDict['message_type'] == 'group':
             send_group_message(msgDict['group_id'], '小白在呢~')
-    else:
+    elif msgDict.get('raw_message'):
         for pos in range(0, len(msgDict['raw_message'])-1):
             #print(msgDict['raw_message'][pos:pos+2])
             if msgDict['raw_message'][pos:pos+2] == '小白':
@@ -43,3 +43,13 @@ def haku (msgDict):
                 elif msgDict['message_type'] == 'group':
                     send_group_message(msgDict['group_id'], '[CQ:face,id=175]')
                 break
+    elif msgDict.get('notice_type') and msgDict['notice_type'] == 'group_recall':
+        #send_group_message(msgDict['group_id'], '{CQ:at,id=' + str(msgDict['user_id']) + '}' + '\n又有人怀孕了(小声)')
+        send_group_message(msgDict['group_id'], '又有人怀孕了(小声)')
+
+    # 主动复读
+    if msgDict.get('raw_message') and msgDict['message_type'] == 'group':
+        try:
+            hakuCore.logging.newMsgLog(msgDict)
+        except:
+            hakuCore.logging.printLog('ERROR', 'hakuCore.py: logging.newMsgLog(msgDict)')

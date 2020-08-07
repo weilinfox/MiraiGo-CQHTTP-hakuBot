@@ -1,6 +1,6 @@
 import socket
 import json
-from time import strftime, gmtime
+from time import strftime, gmtime, sleep
 from hakuCore.config import HOST, RECEIVEPORT, BUF_SIZE
 from hakuCore.hakuCore import haku
 from hakuCore.logging import printLog
@@ -62,7 +62,7 @@ def main():
 
         except:
             printLog('ERROR', 'server.py: in main loop')
-
+    
     server_socket.close()
     print("\nBye~ from server")
 
