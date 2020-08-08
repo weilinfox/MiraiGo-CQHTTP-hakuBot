@@ -14,6 +14,14 @@ def main (msgDict):
             send_group_message(msgDict['group_id'], '小白不认得你~')
         return
 
+    msgList = list(msgDict['raw_message'].split())
+    if len(msgList) > 1 and msgList[1].strip() == 'help':
+        if msgDict['message_type'] == 'private':
+            send_private_message(msgDict['user_id'], '用来测试timer~')
+        elif msgDict['message_type'] == 'group':
+            send_group_message(msgDict['group_id'], '用来测试timer~')
+        return
+
     tm = time.gmtime(time.time() + 8*3600)
     ansStr = time.strftime("%02m/%02d", tm) + '\n'
     ansStr += str(hakuCore.timeEvent.searchGroupDate(time.strftime("%02m%02d", tm)))

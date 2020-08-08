@@ -11,6 +11,7 @@ help
 log [args]
 ping
 time [args]
+*atall [args]
 *timertest [args]'''
     if msgDict['message_type'] == 'private':
         send_private_message(msgDict['user_id'], helpMsg)

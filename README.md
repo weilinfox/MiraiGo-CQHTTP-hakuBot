@@ -1,6 +1,6 @@
 # MiraiGo-CQHTTP-hakuBot
 
-haku-bot，利用go-cqhttp在龙芯和其他平台快速构建的QQ机器人
+haku-bot，小白哥哥：具有灵活的插件机制，利用go-cqhttp在龙芯和其他平台快速构建的QQ机器人。
 
 ## 依赖于
 
@@ -128,6 +128,7 @@ hakuCore 包是机器人的核心内涵，其中 ``config.py`` 用于参数设�
 + bc 简单的四则运算计算器
 + log 计量机器人的流量
 + timertest* 自动提醒测试
++ atall* 群发消息
 
 ps: 带*为管理员指令，可在插件中分别设置允许的QQ id
 

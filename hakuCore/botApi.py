@@ -23,7 +23,8 @@ def get_friend_list():
 
 # 获取群列表
 def get_group_list():
-    return uploadMessage ('get_group_list', {})
+    dataDict = uploadMessage ('get_group_list', {})
+    return dataDict['data']
 
 # 获取群成员列表
 def get_group_member_list(groupId):
