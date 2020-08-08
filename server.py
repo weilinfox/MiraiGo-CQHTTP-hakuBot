@@ -1,14 +1,14 @@
 import socket
 import json
+import hakuCore.logging
 from time import strftime, gmtime, sleep
 from hakuCore.config import HOST, RECEIVEPORT, BUF_SIZE
 from hakuCore.hakuCore import haku
-from hakuCore.logging import printLog
 from quitAll import quitNow, setQuit
 
 def main():
     ADDRESS = (HOST, RECEIVEPORT)
-    print('Listen', HOST + ':' + str(RECEIVEPORT))
+    hakuCore.logging.directPrintLog('Listen ' + HOST + ':' + str(RECEIVEPORT))
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.bind(ADDRESS)
     server_socket.listen(1)
@@ -51,19 +51,19 @@ def main():
 
             if myId != 1009:
                 postBody = postBody.decode('utf-8')
-                print('\n[', timeStr, '](收到):', postBody)
+                hakuCore.logging.printLog('收到', postBody)
                 try:
                     haku(json.loads(postBody))
                 except:
-                    printLog('ERROR', 'server.py: haku(json.loads(postBody))')
+                    hakuCore.logging.printLog('ERROR', 'server.py: haku(json.loads(postBody))')
             else:
-                print('\n[', timeStr, '](收到):', '收到包要求程序退出!')
+                hakuCore.logging.printLog('收到', '收到包要求程序退出!')
                 setQuit()
 
         except:
-            printLog('ERROR', 'server.py: in main loop')
+            hakuCore.logging.printLog('ERROR', 'server.py: in main loop')
     
     server_socket.close()
-    print("\nBye~ from server")
+    hakuCore.logging.directPrintLog("\nBye~ from server")
 
 

@@ -7,6 +7,9 @@ def printLog(logType, logInfo):
     print('\n[', strftime("%a, %m %b %Y %H:%M:%S GMT", gmtime()),
            '](' + logType + '): ', logInfo)
 
+def directPrintLog(logInfo):
+    print(logInfo)
+
 
 def newMsgLog(msgDict):
     global lastMsgDict

@@ -1,15 +1,15 @@
-from time import time, gmtime, strftime, sleep
+from time import sleep
 from importlib import import_module
 from hakuCore.config import INTERVAL
-from hakuCore.logging import printLog
 from quitAll import quitNow
 import hakuCore.timeEvent
+import hakuCore.logging
 
 def checkMsgLog():
     try:
         plgs = import_module('plugins.log')
     except:
-        printLog('INFO', 'timer.py: log plugin NOT found')
+        hakuCore.logging.printLog('INFO', 'timer.py: log plugin NOT found')
     else:
         plgs.check()
     return
@@ -32,9 +32,9 @@ def main():
             checkMsgLog()
             nmsgr = getMsgRate()
             if pmsgr != nmsgr or nmsgr != '0/min':
-                print('\n[', strftime("%a, %m %b %Y %H:%M:%S GMT", gmtime()), '](速率):', nmsgr)
+                hakuCore.logging.printLog('速率', nmsgr)
             pmsgr = nmsgr
         except:
-            printLog('ERROR', 'timer.py: in main loop')
+            hakuCore.logging.printLog('ERROR', 'timer.py: in main loop')
 
-    print("\nBye~ from timer")
+    hakuCore.logging.directPrintLog("\nBye~ from timer")

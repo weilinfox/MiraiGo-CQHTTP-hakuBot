@@ -1,6 +1,3 @@
-#import os
-
-
 
 def reload():
     #print(os.listdir('.'))

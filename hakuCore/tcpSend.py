@@ -1,14 +1,13 @@
 import socket
 import json
-from time import strftime, gmtime
+import hakuCore.logging
 from hakuCore.config import HOST, SENDPORT, BUF_SIZE, TOKEN, TESTQQID
 
 ADDRESS = (HOST, SENDPORT)
 
 def sendMessage (msg):
     try:
-        timeStr = strftime("%a, %m %b %Y %H:%M:%S GMT", gmtime())
-        print('\n[', timeStr, '](发送):', msg, end='')
+        hakuCore.logging.printLog('发送', msg)
         server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server_socket.connect(ADDRESS)
         server_socket.send(msg.encode('utf-8', errors='ignore'))
@@ -31,14 +30,14 @@ def sendMessage (msg):
         strBody = strBody.decode('utf-8')
         server_socket.close()
 
-        print('成功!')
+        hakuCore.logging.directPrintLog('成功!')
 
         return json.loads(strBody)
     #except KeyboardInterrupt:
     #    pass
     except:
         server_socket.close()
-        print('错误!')
+        hakuCore.logging.directPrintLog('错误!')
         return {'retcode': -1, 'status': 'tcpSendError'}
 
 
