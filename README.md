@@ -62,7 +62,7 @@ Connect-Length: 0
 
 ### hakuCore
 
-hakuCore 包是机器人的核心内涵，其中 ``config.py`` 用于参数设置， ``hakuCore.py`` 对所有信息进行处理和分发， ``botApi.py`` 作为回应 go-cqhttp 的接口， ``tcpSend.py`` （通常不需要手动调用）向 go-cqhttp 发送包， ``logging.py`` 打印自定义的日志和自动复读机的实现。
+hakuCore 包是机器人的核心内涵，其中 ``config.py`` 用于参数设置， ``hakuCore.py`` 对所有信息进行处理和分发， ``botApi.py`` 作为回应 go-cqhttp 的接口， ``tcpSend.py`` （通常不需要手动调用）向 go-cqhttp 发送包， ``logging.py`` 打印和记录日志以及自动复读机的实现， ``timeEvent.py`` 读取时间事件相关文件。
 
 ``hakuCore.py`` 接受一个 dict ，这个 dict 和 go-cqhttp 上报的 json 格式一致，主要包含：
 
@@ -72,6 +72,25 @@ hakuCore 包是机器人的核心内涵，其中 ``config.py`` 用于参数设�
 + "raw_message" 信息，收到的信息
 + "message" 同"raw_message"
 + "self_id" 机器人自己的qq号
+
+``hakuCore.py`` 主要有两个方法： ``haku()`` 和 ``hakuTime()`` 。 ``haku()`` 负责消息触发的事件， ``server.py`` 收到消息后会传到这里处理； ``hakuTime()`` 则负责时间触发的事件， ``timer.py`` 默认每隔约 10s （在config.py中的INTERVAL设置）会触发 ``hakuTime()`` 一次，该事件由 ``hakuTime()`` 和 ``timeEvent.py`` 协同处理。
+
+### timeEvent
+
+``hakuCore/timeEvent.py`` 读取时间相关事件的配置，这些配置是在 ``data/groupDay`` 文件夹中的纯文本文件。**它们都以对应的群号或QQ号命名，且均没有后缀。**如群号123的配置文件，文件名即为 ``123`` ；同理QQ号为456的用户的配置文件，文件名即为 ``456`` 。这个功能通常用于定时提醒。
+
+配置均遵循一行一个记录，时间戳+空格+消息文本。按日提醒则时间戳以 ``mmdd`` 格式，按时间提醒则时间戳以 ``hhmm`` 格式。如每年十月一日自动发送“祖国母亲生日快乐”： ``1001 祖国母亲生日快乐`` ；每天晚上十点自动发送“晚安”： ``2200 晚安`` 。消息文本内可以有空格但是不能有换行，并列的多余空格会被忽略而只有一个空格，格式错误的记录会被忽略或消息文本发送不全。
+
+已经实现时间事件的有：
+
+1. 群内按日提醒：配置放在 ``data/groupDay`` 文件夹中，在凌晨零点发送（可以在 hakuCore/hakuCore.py 中更改）。
+
+
+### logging
+
+``hakuCore/logging.py`` 用于日志的记录，日志文件在 ``data/log`` 文件夹下，日志第一行是程序启动的时间，重启程序并不会覆盖日志，旧日志会被重命名。
+
+``hakuCore/logging.py`` 中 ``printLog(logType, logInfo)`` 和 ``directPrintLog(logInfo)`` 两个函数在将日志信息打印在终端的同时在日志文件中记录之，所以推荐用 ``directPrintLog(logInfo)`` 代替 ``print()`` ，以防一些错误被遗漏。 ``printLog(logType, logInfo)``  则会在信息上加上时间戳， ``logType`` 是自定义的错误类型，如 "ERROR"、"INFO" 等。
 
 ### 插件开发
 

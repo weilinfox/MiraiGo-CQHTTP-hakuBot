@@ -1,14 +1,40 @@
 from time import strftime, gmtime, time
+import os
 import hakuCore.botApi
 
 lastMsgDict = {}
+logFileLock = False
+
+def startLog():
+    if os.path.exists('data/log/haku.log'):
+        logNo = 0
+        while os.path.exists('data/log/haku.log.'+str(logNo)):
+            logNo += 1
+        os.rename('data/log/haku.log', 'data/log/haku.log.'+str(logNo))
+        writeFile = open('data/log/haku.log', 'w')
+        writeFile.write('[ ' + strftime("%a, %m %b %Y %H:%M:%S GMT", gmtime()) \
+                            + ' ](启动): 开始记录日志')
+        writeFile.close()
+
+def logging(logInfo):
+    global logFileLock
+    while logFileLock:
+        pass
+    logFileLock = True
+    writeFile = open('data/log/haku.log', 'a')
+    writeFile.write(logInfo.replace('\r\n', '\n')+'\n')
+    writeFile.close()
+    logFileLock = False
 
 def printLog(logType, logInfo):
-    print('\n[', strftime("%a, %m %b %Y %H:%M:%S GMT", gmtime()),
-           '](' + logType + '): ', logInfo)
+    logStr = '\n[ ' + strftime("%a, %m %b %Y %H:%M:%S GMT", gmtime()) \
+                + ' ](' + logType + '): ' + logInfo
+    print(logStr)
+    logging(logStr)
 
 def directPrintLog(logInfo):
     print(logInfo)
+    logging(logInfo)
 
 
 def newMsgLog(msgDict):

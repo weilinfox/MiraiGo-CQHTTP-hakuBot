@@ -57,7 +57,7 @@ def main():
                 except:
                     hakuCore.logging.printLog('ERROR', 'server.py: haku(json.loads(postBody))')
             else:
-                hakuCore.logging.printLog('收到', '收到包要求程序退出!')
+                hakuCore.logging.printLog('收到', '收到1009包要求程序退出!')
                 setQuit()
 
         except:

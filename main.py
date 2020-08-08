@@ -1,11 +1,12 @@
 import threading
+import os
 import socket
 import time
 import hakuCore.config
 import timer
 import server
 from quitAll import setQuit
-from hakuCore.logging import directPrintLog
+from hakuCore.logging import directPrintLog, startLog
 
 def sendQuitPackage():
     try:
@@ -56,6 +57,7 @@ def judgeServerStatus():
         directPrintLog("\ntimer.py start FAILED!")
         setQuit()
         directPrintLog('Quit flag setted.')
+        sendQuitPackage()
         directPrintLog('Waiting for threads...')
         while timerThread.isAlive() or serverThread.isAlive():
             time.sleep(1)
@@ -63,12 +65,53 @@ def judgeServerStatus():
         directPrintLog("\ntimer.py and server.py start FAILED!\n")
         
     return False
-    
+
+def checkDir():
+    # 判断data文件夹是否存在
+    if os.path.exists('data'):
+        if os.path.isdir('data'):
+            directPrintLog('Data dir found.')
+        else:
+            os.rename('data', 'data.old')
+            os.mkdir('data')
+    else:
+        directPrintLog('Create data dir.')
+        os.mkdir('data')
+
+    # 判断data/log文件夹是否存在
+    if os.path.exists('data/log'):
+        if os.path.isdir('data/log'):
+            directPrintLog('Log dir found.')
+        else:
+            os.rename('data/log', 'data/log.old')
+            os.mkdir('data/log')
+    else:
+        directPrintLog('Create log dir.')
+        os.mkdir('data/log')
+
+    # 判断data/groupDay文件夹是否存在
+    if os.path.exists('data/groupDay'):
+        if os.path.isdir('data/groupDay'):
+            directPrintLog('GroupDay dir found.')
+            #print(os.listdir('data/groupDay'))
+            #print(os.listdir('data/'))
+        else:
+            os.rename('data/groupDay', 'data/groupDay.old')
+            os.mkdir('data/groupDay')
+    else:
+        directPrintLog('Create groupDay dir.')
+        os.mkdir('data/groupDay')
+
+
+
+# 初始化日志
+startLog()
 
 # 配置文件检查
-directPrintLog("\nCheck for config errors.")
+directPrintLog("\nCheck for config errors...")
 
-
+# 检测 data 文件夹
+checkDir()
 
 # 启动 server 和 timer
 directPrintLog('Starting service.')

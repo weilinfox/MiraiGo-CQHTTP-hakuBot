@@ -1,35 +1,16 @@
 import os
 import hakuCore.botApi
+import hakuCore.logging
 
 groups = []
 
 def load():
     global groups
-    print('loading data...')
-    
-    # 判断data文件夹是否存在
-    if os.path.exists('data'):
-        if os.path.isdir('data'):
-            print('data dir found')
-        else:
-            os.rename('data', 'data.old')
-            os.mkdir('data')
-    else:
-        os.mkdir('data')
-        
-    # 判断data/group文件夹是否存在
-    if os.path.exists('data/group'):
-        if os.path.isdir('data/group'):
-            print('group dir found')
-            groups = os.listdir('data/group')
-            #print(os.listdir('data/group'))
-            #print(os.listdir('data/'))
-            print('load ' + str(len(groups)) + ' groups')
-        else:
-            os.rename('data/group', 'data/group.old')
-            os.mkdir('data/group')
-    else:
-        os.mkdir('data/group')
+    hakuCore.logging.directPrintLog('loading data...')
+    groups = os.listdir('data/groupDay')
+    hakuCore.logging.directPrintLog('load ' + str(len(groups)) + ' group-days.')
+
+
 
 def searchGroup(group, date):
     # int group, int date(mmdd)
@@ -41,7 +22,7 @@ def searchGroup(group, date):
     else:
         ans = '';
         firstLine = True
-        readFile = open('data/group/'+groupFile, 'r')
+        readFile = open('data/groupDay/'+groupFile, 'r')
         while True:
             line = readFile.readline()
             if len(line) == 0:
@@ -71,6 +52,8 @@ def searchGroupDate(date):
     global groups
     ans = {}
     for grps in groups:
+        if not grps[0].isdigit():
+            continue
         grpstr = searchGroup(grps, date)
         if len(grpstr) > 0:
             ans.update({int(grps):grpstr})
