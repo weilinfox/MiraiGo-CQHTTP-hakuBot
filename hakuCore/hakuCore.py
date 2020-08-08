@@ -75,11 +75,17 @@ def hakuTime():
         if tm.tm_hour == 0 and tm.tm_min == 0:
             tmstmp = time.strftime("%02m%02d", tm)
             if not dateStampList.count(tmstmp):
-                hakuCore.timeEvent.sendGroupDate(time.strftime("%02m%02d", tm))
+                hakuCore.timeEvent.sendGroupDate(tmstmp)
                 dateStampList.append(tmstmp)
         else:
             if len(dateStampList) > 0:
                 dateStampList = []
+
+        # 每分钟检查 仅群组
+        tmstmp = time.strftime("%02H%02M", tm)
+        if not timeStampList.count(tmstmp):
+            hakuCore.timeEvent.sendGroupTime(tmstmp)
+            timeStampList = [tmstmp]
                 
     except:
         hakuCore.logging.printLog('ERROR', 'hakuCore.py: in hakuTime()')

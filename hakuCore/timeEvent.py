@@ -5,26 +5,56 @@ import os
 import hakuCore.botApi
 import hakuCore.logging
 
-groups = []
+groupDays = []
+groupTimes = []
+writeLock = False
+readLock = False
 
 def load():
-    global groups
+    global groupDays, groupTimes
     hakuCore.logging.directPrintLog('loading data...')
-    groups = os.listdir('data/groupDay')
-    hakuCore.logging.directPrintLog('load ' + str(len(groups)) + ' group-days.')
+    # 写时不可读
+    while writeLock:
+        pass
+    readLock = True
+    groupDays = os.listdir('data/groupDay')
+    groupTimes = os.listdir('data/groupTime')
+    readLock = False
+    hakuCore.logging.directPrintLog('load ' + str(len(groupDays)) + ' group-days.')
+    hakuCore.logging.directPrintLog('load ' + str(len(groupTimes)) + ' group-times.')
 
+def mwrite():
+    # 读时不可写
+    while readLock:
+        pass
+    writeLock = True
+    writeLock = False
 
-def searchGroup(group, date):
-    # int group, int date(mmdd)
-    global groups
+def searchGroup(dirname, group, date):
+    # int group, int date(mmdd)/time(hhmm)
+    # 从对应 dirname 文件夹中读取 group 对应配置
+    # 匹配 date 或 time
+    # 写时不可读
+    while writeLock:
+        pass
+    readLock = True
+    if not os.path.exists('data/' + dirname):
+        hakuCore.logging.printLog('错误', 'in timeEvent.py: 没有 data/' \
+                                  + dirname + '这个目录')
+        readLock = False
+        return ''
+    
     groupFile = str(group)
     daten = int(date)
-    if not groups.count(groupFile):
+    if not os.path.exists('data/' + dirname + '/' + groupFile):
+        hakuCore.logging.printLog('错误', 'in timeEvent.py: 没有 data/' \
+                                  + dirname + '/' + groupFile + '这个文件')
+        readLock = False
         return ''
     else:
         ans = '';
         firstLine = True
-        readFile = open('data/groupDay/'+groupFile, 'r')
+        readFile = open('data/' + dirname + '/' + groupFile, 'r')
         while True:
             line = readFile.readline()
             if len(line) == 0:
@@ -45,32 +75,49 @@ def searchGroup(group, date):
                             ans += ' '
                         ans += lineList[pos]
             except:
-                pass
+                hakuCore.logging.printLog('ERROR', 'in timeEvent.py: searchGroup(' \
+                                          + dirname + ', ' + groupFile + ', ' + str(date) + ')')
         readFile.close()
+        readLock = False
         return ans
 
 def searchGroupDate(date):
     # int date(mmdd)
-    global groups
+    global groupDays
     ans = {}
-    for grps in groups:
-        if not grps[0].isdigit():
-            continue
-        grpstr = searchGroup(grps, date)
+    for grps in groupDays:
+        grpstr = searchGroup('groupDay', grps, date)
         if len(grpstr) > 0:
             ans.update({int(grps):grpstr})
     return ans
 
-def sendGroup(grps, date):
-    groupNo = int(grps)
-    daten = int(date)
-    msg = searchGroup(groupNo, daten)
-    if len(msg) > 0:
-        hakuCore.botApi.send_group_message(groupNo, msg)
+def searchGroupTime(tm):
+    # int tm(hhmm)
+    global groupTimes
+    ans = {}
+    for grps in groupTimes:
+        grpstr = searchGroup('groupTime', grps, tm)
+        if len(grpstr) > 0:
+            ans.update({int(grps):grpstr})
+    return ans
+
+#def sendGroup(dirname, grps, date):
+#    groupNo = int(grps)
+#    daten = int(date)
+#    msg = searchGroup(dirname, groupNo, daten)
+#    if len(msg) > 0:
+#        hakuCore.botApi.send_group_message(groupNo, msg)
 
 def sendGroupDate(date):
     daten = int(date)
     msgDict = searchGroupDate(daten)
+    if len(msgDict) > 0:
+        for key in msgDict.keys():
+            hakuCore.botApi.send_group_message(key, msgDict[key])
+
+def sendGroupTime(tm):
+    tmn = int(tm)
+    msgDict = searchGroupTime(tmn)
     if len(msgDict) > 0:
         for key in msgDict.keys():
             hakuCore.botApi.send_group_message(key, msgDict[key])

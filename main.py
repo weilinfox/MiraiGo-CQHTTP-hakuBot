@@ -96,14 +96,23 @@ def checkDir():
     if os.path.exists('data/groupDay'):
         if os.path.isdir('data/groupDay'):
             directPrintLog('GroupDay dir found.')
-            #print(os.listdir('data/groupDay'))
-            #print(os.listdir('data/'))
         else:
             os.rename('data/groupDay', 'data/groupDay.old')
             os.mkdir('data/groupDay')
     else:
         directPrintLog('Create groupDay dir.')
         os.mkdir('data/groupDay')
+
+    # 判断data/groupTime文件夹是否存在
+    if os.path.exists('data/groupTime'):
+        if os.path.isdir('data/groupTime'):
+            directPrintLog('GroupTime dir found.')
+        else:
+            os.rename('data/groupTime', 'data/groupTime.old')
+            os.mkdir('data/groupTime')
+    else:
+        directPrintLog('Create groupTime dir.')
+        os.mkdir('data/groupTime')
 
 
 

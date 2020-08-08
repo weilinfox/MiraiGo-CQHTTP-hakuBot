@@ -25,6 +25,9 @@ def main (msgDict):
             send_group_message(msgDict['group_id'], '用来测试timer~')
         return
 
+    # 重载配置
+    hakuCore.timeEvent.load()
+
     tm = time.gmtime(time.time() + 8*3600)
     ansStr = time.strftime("%02m/%02d", tm) + '\n'
     ansStr += str(hakuCore.timeEvent.searchGroupDate(time.strftime("%02m%02d", tm)))

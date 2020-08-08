@@ -25,7 +25,7 @@ haku-bot，小白哥哥：具有灵活的插件机制，利用go-cqhttp在龙芯
 
 ### 配置
 
-在 ``hakuCore/config.py`` 中设置监听的地址和端口等即可。不带星号“*”的可以忽略保留默认值
+在 ``hakuCore/config.py`` 中设置监听的地址和端口等即可。带星号“*”的字段必须重新设置并保证其正确性，其他字段可以保留其默认值
 
 + BUF_SIZE socket接收和发送一个包的大小
 + TESTQQID 测试程序时私发消息的qq号
@@ -84,6 +84,7 @@ hakuCore 包是机器人的核心内涵，其中 ``config.py`` 用于参数设�
 已经实现时间事件的有：
 
 1. 群内按日提醒：配置放在 ``data/groupDay`` 文件夹中，在凌晨零点发送（可以在 hakuCore/hakuCore.py 中更改）。
+2. 群内每日按时间提醒：配置放在 ``data/groupTime`` 文件夹中。
 
 
 ### logging
@@ -115,6 +116,7 @@ hakuCore 包是机器人的核心内涵，其中 ``config.py`` 用于参数设�
 5. 定时在终端打印机器人流量
 6. 部分api可以通过函数调用
 7. 智zhi能zhang复读机
+8. 群提醒
 
 已经函数实现的 api 见 hakuCore/botApi.py
 
