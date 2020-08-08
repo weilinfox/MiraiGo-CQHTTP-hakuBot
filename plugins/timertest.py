@@ -29,11 +29,15 @@ def main (msgDict):
     hakuCore.timeEvent.load()
 
     tm = time.gmtime(time.time() + 8*3600)
-    ansStr = time.strftime("%02m/%02d", tm) + '\n'
-    ansStr += str(hakuCore.timeEvent.searchGroupDate(time.strftime("%02m%02d", tm)))
+    ansStr = '***' + time.strftime("%02m/%02d", tm) + '***'
+    strDict = hakuCore.timeEvent.searchGroupDate(time.strftime("%02m%02d", tm))
+    for key in strDict.keys():
+        ansStr += '\n+ ' + str(key) + '\n' + strDict[key]
     tm = time.gmtime(time.time() + 32*3600)
-    ansStr += '\n' + time.strftime("%02m/%02d", tm) + '\n'
-    ansStr += str(hakuCore.timeEvent.searchGroupDate(time.strftime("%02m%02d", tm)))
+    ansStr += '\n***' + time.strftime("%02m/%02d", tm) + '***'
+    strDict = hakuCore.timeEvent.searchGroupDate(time.strftime("%02m%02d", tm))
+    for key in strDict.keys():
+        ansStr += '\n+ ' + str(key) + '\n' + strDict[key]
     if msgDict['message_type'] == 'private':
         send_private_message(msgDict['user_id'], ansStr)
     elif msgDict['message_type'] == 'group':
