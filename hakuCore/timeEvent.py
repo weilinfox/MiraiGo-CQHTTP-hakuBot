@@ -11,7 +11,6 @@ def load():
     hakuCore.logging.directPrintLog('load ' + str(len(groups)) + ' group-days.')
 
 
-
 def searchGroup(group, date):
     # int group, int date(mmdd)
     global groups
