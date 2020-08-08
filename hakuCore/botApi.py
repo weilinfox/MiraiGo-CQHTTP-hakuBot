@@ -1,3 +1,6 @@
+# 此源代码的使用受 GNU AFFERO GENERAL PUBLIC LICENSE version 3 许可证的约束, 您可以在下面的链接找到该许可证.
+# https://github.com/weilinfox/MiraiGo-CQHTTP-hakuBot/blob/master/LICENSE
+
 # 返回一个 list
 # retcode 为 0 同时 status 为 ok 则响应成功，返回数据在 data 字段
 # retcode 为 -1 同时 status 为 tcpSendError 则函数发生未知错误

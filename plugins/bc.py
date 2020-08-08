@@ -1,3 +1,6 @@
+# 此源代码的使用受 GNU AFFERO GENERAL PUBLIC LICENSE version 3 许可证的约束, 您可以在下面的链接找到该许可证.
+# https://github.com/weilinfox/MiraiGo-CQHTTP-hakuBot/blob/master/LICENSE
+
 # by weilinfox~
 # 支持四则运算，百分号、括号和浮点数，可以省略部分乘号
 # 支持语法检查
