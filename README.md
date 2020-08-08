@@ -37,7 +37,9 @@ haku-bot，小白哥哥：具有灵活的插件机制，利用go-cqhttp在龙芯
 
 ### 运行
 
-``python3 main.py`` 运行。
+``python3 main.py`` 运行，也可以通过脚本 ``./haku.sh`` 运行。
+
+若在远程服务器上运行需要用 screen 等工具挂在后台。
 
 ### 停止运行
 
