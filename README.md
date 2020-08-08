@@ -5,13 +5,14 @@ haku-bot，利用go-cqhttp在龙芯和其他平台快速构建的QQ机器人
 ## 依赖于
 
 + [go-cqhttp](https://github.com/Mrs4s/go-cqhttp) 使用 mirai 以及 MiraiGo 开发的cqhttp golang原生实现
-+ Python3.6 尽量使用了较底层的标准库，在龙梦Fedora28平台编写测试，其他平台兼容性未知。
++ Python3.6 尽量使用了较底层的标准库，在龙梦Fedora28平台编写测试，**不考虑Windows平台兼容性**。
 
 ## 使用到的库
 
 + importlib
 + json
 + math
++ os
 + socket
 + threading
 + time
@@ -118,6 +119,7 @@ hakuCore 包是机器人的核心内涵，其中 ``config.py`` 用于参数设�
 
 + go-cqhttp 需要交叉编译为 mips64le 。暂时没有官方的 mips64le release。
 + 程序中只是使用 socket 模拟了 http 协议的通信，虽然写 HTTP/1.0 但实际并没有完全遵循任何标准。
++ 不要直接用 print 在终端显示信息，而用 ``hakuCore.logging`` 中的 ``printLog`` 和 ``directPrintLog`` 代替 。
 + 只有在 ``main.py`` 调用 ``server.py`` 和 ``timer.py`` 时创建了两个线程，所以整个程序是阻塞式的。
 + 不知道哪里的问题，程序退出以后端口并没有立即释放，重启间隔一分钟内会出现端口占用的错误。
 

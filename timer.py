@@ -2,6 +2,7 @@ from time import sleep
 from importlib import import_module
 from hakuCore.config import INTERVAL
 from quitAll import quitNow
+from hakuCore.hakuCore import hakuTime
 import hakuCore.timeEvent
 import hakuCore.logging
 
@@ -25,15 +26,18 @@ def getMsgRate():
 def main():
     pmsgr = '-1/min'
     nmsgr = '0/min'
+    hakuCore.timeEvent.load()
     while not quitNow():
         try:
-            #hakuCore.timeEvent.main()
             sleep(INTERVAL)
             checkMsgLog()
+            # 打印小白流量
             nmsgr = getMsgRate()
             if pmsgr != nmsgr or nmsgr != '0/min':
                 hakuCore.logging.printLog('速率', nmsgr)
             pmsgr = nmsgr
+            # 触发时间事件
+            hakuTime()
         except:
             hakuCore.logging.printLog('ERROR', 'timer.py: in main loop')
 
