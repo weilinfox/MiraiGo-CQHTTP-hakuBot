@@ -115,15 +115,14 @@ def checkDir():
         os.mkdir('data/groupTime')
 
 
+# 检测 data 文件夹
+checkDir()
 
 # 初始化日志
 startLog()
 
 # 配置文件检查
 directPrintLog("\nCheck for config errors...")
-
-# 检测 data 文件夹
-checkDir()
 
 # 启动 server 和 timer
 directPrintLog('Starting service.')

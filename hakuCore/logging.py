@@ -14,10 +14,10 @@ def startLog():
         while os.path.exists('data/log/haku.log.'+str(logNo)):
             logNo += 1
         os.rename('data/log/haku.log', 'data/log/haku.log.'+str(logNo))
-        writeFile = open('data/log/haku.log', 'w')
-        writeFile.write('[ ' + strftime("%a, %m %b %Y %H:%M:%S GMT", gmtime()) \
-                            + ' ](启动): 开始记录日志')
-        writeFile.close()
+    writeFile = open('data/log/haku.log', 'w')
+    writeFile.write('[ ' + strftime("%a, %m %b %Y %H:%M:%S GMT", gmtime()) \
+                        + ' ](启动): 开始记录日志')
+    writeFile.close()
 
 def logging(logInfo):
     global logFileLock
