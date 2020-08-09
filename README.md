@@ -13,6 +13,7 @@ haku-bot，小白哥哥：具有灵活的插件机制，利用go-cqhttp在龙芯
 + json
 + math
 + os
++ random
 + socket
 + threading
 + time
