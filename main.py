@@ -73,45 +73,45 @@ def checkDir():
     # 判断data文件夹是否存在
     if os.path.exists('data'):
         if os.path.isdir('data'):
-            directPrintLog('Data dir found.')
+            print('Data dir found.')
         else:
             os.rename('data', 'data.old')
             os.mkdir('data')
     else:
-        directPrintLog('Create data dir.')
+        print('Create data dir.')
         os.mkdir('data')
 
     # 判断data/log文件夹是否存在
     if os.path.exists('data/log'):
         if os.path.isdir('data/log'):
-            directPrintLog('Log dir found.')
+            print('Log dir found.')
         else:
             os.rename('data/log', 'data/log.old')
             os.mkdir('data/log')
     else:
-        directPrintLog('Create log dir.')
+        print('Create log dir.')
         os.mkdir('data/log')
 
     # 判断data/groupDay文件夹是否存在
     if os.path.exists('data/groupDay'):
         if os.path.isdir('data/groupDay'):
-            directPrintLog('GroupDay dir found.')
+            print('GroupDay dir found.')
         else:
             os.rename('data/groupDay', 'data/groupDay.old')
             os.mkdir('data/groupDay')
     else:
-        directPrintLog('Create groupDay dir.')
+        print('Create groupDay dir.')
         os.mkdir('data/groupDay')
 
     # 判断data/groupTime文件夹是否存在
     if os.path.exists('data/groupTime'):
         if os.path.isdir('data/groupTime'):
-            directPrintLog('GroupTime dir found.')
+            print('GroupTime dir found.')
         else:
             os.rename('data/groupTime', 'data/groupTime.old')
             os.mkdir('data/groupTime')
     else:
-        directPrintLog('Create groupTime dir.')
+        print('Create groupTime dir.')
         os.mkdir('data/groupTime')
 
 
