@@ -22,7 +22,7 @@ qaq'''
             if ans == 0:
                 respond = '汝不会念嘛~\n' + req[1]
             elif ans == 1:
-                respond = '可是小白觉得犬夜叉是坠吼的!'
+                respond = '小白是不会逃避的!'
             else:
                 respond = req[1]
             send_private_message(msgDict['user_id'], respond)
@@ -39,7 +39,7 @@ qaq'''
             if ans == 0:
                 respond = '汝不会念嘛~\n' + req[1]
             elif ans == 1:
-                respond = '可是小白觉得犬夜叉是坠吼的!'
+                respond = '小白是不会逃避的!'
             else:
                 respond = req[1]
             send_group_message(msgDict['group_id'], respond)

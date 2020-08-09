@@ -11,7 +11,7 @@ import hakuCore.botApi
 import hakuCore.logging
 import hakuCore.timeEvent
 
-VERSION = 'v1.0.1'
+VERSION = 'v1.0.3'
 
 dateStampList = []      # 按日日期戳 str
 timeStampList = []      # 按时时间戳 str
@@ -42,18 +42,20 @@ def haku (msgDict):
     # 命令以外的处理
     if msgDict.get('raw_message') and msgDict['raw_message'].strip() == '小白':
         if msgDict['message_type'] == 'private':
-            hakuCore.botApi.send_private_message(msgDict['user_id'], '小白在呢~')
+            hakuCore.botApi.send_private_message(msgDict['user_id'], '有小白在，不会有事的')
         elif msgDict['message_type'] == 'group':
-            hakuCore.botApi.send_group_message(msgDict['group_id'], '小白在呢~')
+            hakuCore.botApi.send_group_message(msgDict['group_id'], '有小白在，不会有事的')
     elif msgDict.get('raw_message'):
-        for pos in range(0, len(msgDict['raw_message'])-1):
-            #print(msgDict['raw_message'][pos:pos+2])
-            if msgDict['raw_message'][pos:pos+2] == '小白':
-                if msgDict['message_type'] == 'private':
-                    hakuCore.botApi.send_private_message(msgDict['user_id'], '[CQ:face,id=175]')
-                elif msgDict['message_type'] == 'group':
-                    hakuCore.botApi.send_group_message(msgDict['group_id'], '[CQ:face,id=175]')
-                break
+        if msgDict['raw_message'].count('小白'):
+            if msgDict['message_type'] == 'private':
+                hakuCore.botApi.send_private_message(msgDict['user_id'], '[CQ:face,id=175]')
+            elif msgDict['message_type'] == 'group':
+                hakuCore.botApi.send_group_message(msgDict['group_id'], '[CQ:face,id=175]')
+        elif msgDict['raw_message'].count('犬夜叉'):
+            if msgDict['message_type'] == 'private':
+                hakuCore.botApi.send_private_message(msgDict['user_id'], '犬夜叉是坠吼的!')
+            elif msgDict['message_type'] == 'group':
+                hakuCore.botApi.send_group_message(msgDict['group_id'], '犬夜叉是坠吼的!')
     elif msgDict.get('notice_type') and msgDict['notice_type'] == 'group_recall':
         #hakuCore.botApi.send_group_message(msgDict['group_id'], '{CQ:at,id=' + str(msgDict['user_id']) + '}' + '\n又有人怀孕了(小声)')
         #hakuCore.botApi.send_group_message(msgDict['group_id'], '又有人怀孕了(小声)')
