@@ -2,6 +2,10 @@
 
 haku-bot，小白哥哥：具有灵活的插件机制，利用go-cqhttp在龙芯和其他平台快速构建的QQ机器人。
 
+企鹅干的所有事情大家都非常清楚，也没必要多说了。
+
+<font color='red'>当无产阶级不再思考资产阶级本身的合理性，而将反对的目标局限于某几个资本家的时候，说明资本主义已经成功了。</font>
+
 ## 依赖于
 
 + [go-cqhttp](https://github.com/Mrs4s/go-cqhttp) 使用 mirai 以及 MiraiGo 开发的cqhttp golang原生实现

@@ -7,8 +7,8 @@
 # fun 只支持单个运算符的式子
 
 # 为 xzz 定制的 bc 的一个版本
-# 添加 main 兼容 hakuBot
-# 命令为 :bc
+# 修改以兼容 hakuBot
+
 
 import math
 from hakuCore.botApi import *
@@ -371,10 +371,13 @@ def funMain (ch):
 
 def GETMSG(self):
     ans = "汝以为小白不会算算数的嘛!"
-    if (len(self) == 0 or (len(self) >= 1 and self[0] != ":bc")):
+    #if (len(self) == 0 or (len(self) >= 1 and self[0] != ":bc")):
+    #    ans = "是在召唤我咩，哼唧~"
+    #elif (len(self) < 2):
+    #    ans = "召唤我有什么事咩？有啥不懂输 help 哦~"
+    # 在hakuBot中多余的判断
+    if (len(self) < 2):
         ans = "是在召唤我咩，哼唧~"
-    elif (len(self) < 2):
-        ans = "召唤我有什么事咩？有啥不懂输 help 哦~"
     elif (self[1] == "help"):
         ans = "你喂给我式子我算呀，我只会四则运算哦，还不会就问狸吧~\n"
         ans += "如果输入fun会进入函数模式哦，funhelp可以查看支持的函数嘿嘿"
