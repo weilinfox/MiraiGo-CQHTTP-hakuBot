@@ -124,6 +124,7 @@ hakuCore 包是机器人的核心内涵，其中 ``config.py`` 用于参数设�
 6. 部分api可以通过函数调用
 7. 智zhi能zhang复读机
 8. 群提醒
+9. 欢迎新人
 
 已经函数实现的 api 见 hakuCore/botApi.py
 

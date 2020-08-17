@@ -68,6 +68,18 @@ def haku (msgDict):
         except:
             hakuCore.logging.printLog('ERROR', 'hakuCore.py: logging.newMsgLog(msgDict)')
 
+    # 欢迎新人
+    # 指定群回复群号为int 'else'键值为空时不回复未指定的群
+    group = {
+        'else':'欢迎欢迎，进群了就是一家人了~'
+        }
+    if msgDict.get('notice_type') and msgDict['notice_type'] == 'group_increase':
+        if groupIncreaseReply.get(msgDict['group_id']):
+            hakuCore.botApi.send_group_message(msgDict['group_id'], '{CQ:at,id=' + str(msgDict['user_id']) + '}\n' + groupIncreaseReply[msgDict['group_id']])
+        elif groupIncreaseReply.get('else') and len(groupIncreaseReply['else']) > 0:
+            hakuCore.botApi.send_group_message(msgDict['group_id'], '{CQ:at,id=' + str(msgDict['user_id']) + '}\n' + groupIncreaseReply['else'])
+        
+
 
 def hakuTime():
     global dateStampList, timeStampList, dateTimeStampList
