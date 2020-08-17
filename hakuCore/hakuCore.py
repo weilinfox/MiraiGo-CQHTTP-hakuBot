@@ -57,7 +57,7 @@ def haku (msgDict):
             elif msgDict['message_type'] == 'group':
                 hakuCore.botApi.send_group_message(msgDict['group_id'], '犬夜叉是坠吼的!')
     elif msgDict.get('notice_type') and msgDict['notice_type'] == 'group_recall':
-        #hakuCore.botApi.send_group_message(msgDict['group_id'], '{CQ:at,id=' + str(msgDict['user_id']) + '}' + '\n又有人怀孕了(小声)')
+        #hakuCore.botApi.send_group_message(msgDict['group_id'], '[CQ:at,qq=' + str(msgDict['user_id']) + ']' + '\n又有人怀孕了(小声)')
         #hakuCore.botApi.send_group_message(msgDict['group_id'], '又有人怀孕了(小声)')
         pass
 
@@ -70,14 +70,14 @@ def haku (msgDict):
 
     # 欢迎新人
     # 指定群回复群号为int 'else'键值为空时不回复未指定的群
-    group = {
+    groupIncreaseReply = {
         'else':'欢迎欢迎，进群了就是一家人了~'
         }
     if msgDict.get('notice_type') and msgDict['notice_type'] == 'group_increase':
-        if groupIncreaseReply.get(msgDict['group_id']):
-            hakuCore.botApi.send_group_message(msgDict['group_id'], '{CQ:at,id=' + str(msgDict['user_id']) + '}\n' + groupIncreaseReply[msgDict['group_id']])
+        if groupIncreaseReply.get(msgDict['group_id']) and len(groupIncreaseReply[msgDict['group_id']]) > 0:
+            hakuCore.botApi.send_group_message(msgDict['group_id'], '[CQ:at,qq=' + str(msgDict['user_id']) + ']\n' + groupIncreaseReply[msgDict['group_id']])
         elif groupIncreaseReply.get('else') and len(groupIncreaseReply['else']) > 0:
-            hakuCore.botApi.send_group_message(msgDict['group_id'], '{CQ:at,id=' + str(msgDict['user_id']) + '}\n' + groupIncreaseReply['else'])
+            hakuCore.botApi.send_group_message(msgDict['group_id'], '[CQ:at,qq=' + str(msgDict['user_id']) + ']\n' + groupIncreaseReply['else'])
         
 
 
