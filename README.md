@@ -125,6 +125,7 @@ hakuCore 包是机器人的核心内涵，其中 ``config.py`` 用于参数设�
 7. 智zhi能zhang复读机
 8. 群提醒
 9. 欢迎新人
+10. 被at回复
 
 已经函数实现的 api 见 hakuCore/botApi.py
 
@@ -155,6 +156,8 @@ ps: 带*为管理员指令，可在插件中分别设置允许的QQ id
 + 不要直接用 print 在终端显示信息，而用 ``hakuCore.logging`` 中的 ``printLog`` 和 ``directPrintLog`` 代替 。
 + 只有在 ``main.py`` 调用 ``server.py`` 和 ``timer.py`` 时创建了两个线程，所以整个程序是阻塞式的。
 + 不知道哪里的问题，程序退出以后端口并没有立即释放，重启间隔一分钟内会出现端口占用的错误。
++ [我的小文章](https://www.cnblogs.com/weilinfox/p/13466407.html)
 
 
 By SDUST weilinfox
+

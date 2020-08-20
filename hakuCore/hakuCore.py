@@ -13,9 +13,9 @@ import hakuCore.timeEvent
 
 VERSION = 'v1.0.5'
 
-dateStampList = []      # 按日日期戳 str
-timeStampList = []      # 按时时间戳 str
-dateTimeStampList = []  # 按日期时间戳 str
+dateStampList = []      # 按日日期戳 [str]
+timeStampList = []      # 按时时间戳 [str]
+dateTimeStampList = []  # 按日期时间戳 [str]
 
 def newMsgLog():
     try:
@@ -26,8 +26,15 @@ def newMsgLog():
         plgs.insert()
 
 def haku (msgDict):
-    newMsgLog()
+    atMe = '[CQ:at,qq=' + str(msgDict['self_id']) + ']' # haku被at的cq码
+
+    # 被at
+    if msgDict.get('raw_message') and msgDict['message_type'] == 'group' and msgDict['raw_message'].count(atMe):
+        hakuCore.botApi.send_group_message(msgDict['group_id'], '[CQ:at,qq=' + str(msgDict['user_id']) + ']\n' + '找小白有啥事咩，可以发送":help"获取帮助哦~')
+        return
     
+    newMsgLog()
+
     # 分发命令
     if (msgDict.get('raw_message') and msgDict['raw_message'][0] == ':'):
         req = list(msgDict['raw_message'].split(' ', 1))
@@ -71,7 +78,7 @@ def haku (msgDict):
     # 欢迎新人
     # 指定群回复群号为int 'else'键值为空时不回复未指定的群
     groupIncreaseReply = {
-        'else':'欢迎欢迎，进群了就是一家人了~'
+        'else':'欢迎欢迎，进了群就是一家人了~'
         }
     if msgDict.get('notice_type') and msgDict['notice_type'] == 'group_increase':
         if groupIncreaseReply.get(msgDict['group_id']) and len(groupIncreaseReply[msgDict['group_id']]) > 0:
