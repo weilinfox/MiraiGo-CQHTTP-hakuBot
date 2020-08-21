@@ -12,6 +12,7 @@ bc [args]
 echo [args]
 help
 music [args]
+qqmusic [args]
 log [args]
 ping
 time [args]
