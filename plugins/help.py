@@ -11,6 +11,7 @@ about
 bc [args]
 echo [args]
 help
+music [args]
 log [args]
 ping
 time [args]
