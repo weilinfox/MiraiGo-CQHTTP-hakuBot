@@ -11,7 +11,7 @@ import hakuCore.botApi
 import hakuCore.logging
 import hakuCore.timeEvent
 
-VERSION = 'v1.0.11'
+VERSION = 'v1.0.12'
 
 dateStampList = []      # 按日日期戳 [str]
 timeStampList = []      # 按时时间戳 [str]
@@ -78,6 +78,7 @@ def haku (msgDict):
     # 欢迎新人
     # 指定群回复群号为int 键值为空时不回复指定的群
     groupIncreaseReply = {
+        722237880:'',
         'else':'欢迎欢迎，进了群就是一家人了~'
         }
     if msgDict.get('notice_type') and msgDict['notice_type'] == 'group_increase':
@@ -85,7 +86,7 @@ def haku (msgDict):
             hakuCore.botApi.send_group_message(msgDict['group_id'], '[CQ:at,qq=' + str(msgDict['user_id']) + ']\n' + groupIncreaseReply[msgDict['group_id']])
         elif groupIncreaseReply.get(msgDict['group_id']) != None and len(groupIncreaseReply[msgDict['group_id']]) == 0:
             pass
-        elif groupIncreaseReply.get('else') and len(groupIncreaseReply['else']) > 0:
+        elif groupIncreaseReply.get('else') != None and len(groupIncreaseReply['else']) > 0:
             hakuCore.botApi.send_group_message(msgDict['group_id'], '[CQ:at,qq=' + str(msgDict['user_id']) + ']\n' + groupIncreaseReply['else'])
         
 
