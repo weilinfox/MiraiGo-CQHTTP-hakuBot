@@ -81,9 +81,9 @@ def haku (msgDict):
         'else':'欢迎欢迎，进了群就是一家人了~'
         }
     if msgDict.get('notice_type') and msgDict['notice_type'] == 'group_increase':
-        if groupIncreaseReply.get(msgDict['group_id']) and len(groupIncreaseReply[msgDict['group_id']]) > 0:
+        if groupIncreaseReply.get(msgDict['group_id']) != None and len(groupIncreaseReply[msgDict['group_id']]) > 0:
             hakuCore.botApi.send_group_message(msgDict['group_id'], '[CQ:at,qq=' + str(msgDict['user_id']) + ']\n' + groupIncreaseReply[msgDict['group_id']])
-        elif groupIncreaseReply.get(msgDict['group_id']) and len(groupIncreaseReply[msgDict['group_id']]) == 0:
+        elif groupIncreaseReply.get(msgDict['group_id']) != None and len(groupIncreaseReply[msgDict['group_id']]) == 0:
             pass
         elif groupIncreaseReply.get('else') and len(groupIncreaseReply['else']) > 0:
             hakuCore.botApi.send_group_message(msgDict['group_id'], '[CQ:at,qq=' + str(msgDict['user_id']) + ']\n' + groupIncreaseReply['else'])
