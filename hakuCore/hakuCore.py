@@ -42,8 +42,12 @@ def haku (msgDict):
             plgs = import_module('plugins.'+req[0][1:])
         except:
             hakuCore.logging.printLog('DEBUG', 'hakuCore.py: in haku, no such plugin: ' + req[0][1:])
+            return
         else:
-            plgs.main(msgDict)
+            try:
+                plgs.main(msgDict)
+            except:
+                hakuCore.logging.printLog('ERROR', 'plugins.' + req[0][1:] + '.py: ERROR occurred in this plugin.')
             return
 
     # 命令以外的处理
