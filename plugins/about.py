@@ -6,7 +6,8 @@ from hakuCore.hakuCore import VERSION
 
 def main (msgDict):
     aboutMsg = '小白哥哥是狸开发的qq机器人~\n'
-    aboutMsg += '小白是小白哥哥 ' + VERSION + ' 的分身!'
+    aboutMsg += '小白是小白哥哥 ' + VERSION + ' 的分身!\n'
+    aboutMsg += '欢迎大佬贡献代码: https://github.com/weilinfox/MiraiGo-CQHTTP-hakuBot'
     if msgDict['message_type'] == 'private':
         send_private_message(msgDict['user_id'], aboutMsg)
     elif msgDict['message_type'] == 'group':
