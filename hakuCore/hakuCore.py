@@ -25,6 +25,14 @@ def newMsgLog():
     else:
         plgs.insert()
 
+def newHeartBeat():
+    try:
+        plgs = import_module('plugins.log')
+    except:
+        hakuCore.logging.printLog('ERROR', 'hakuCore.py: in newHeartBeat()')
+    else:
+        plgs.heartBeats()
+
 def haku (msgDict):
     atMe = '[CQ:at,qq=' + str(msgDict['self_id']) + ']' # haku被at的cq码
 
@@ -33,6 +41,10 @@ def haku (msgDict):
         hakuCore.botApi.send_group_message(msgDict['group_id'], '[CQ:at,qq=' + str(msgDict['user_id']) + ']\n' + '找小白有啥事咩，可以发送":help"获取帮助哦~')
         return
     
+    if msgDict.get('post_type') and msgDict['post_type'] == 'meta_event':
+        if msgDict.get('meta_event_type') and msgDict['meta_event_type'] == 'heartbeat':
+            newHeartBeat()
+            return
     newMsgLog()
 
     # 分发命令

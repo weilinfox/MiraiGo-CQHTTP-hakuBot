@@ -24,7 +24,7 @@ def getMsgRate():
     except:
         return 'Log plugin NOT found.'
     else:
-        return str(plgs.msgRate())+'/min'
+        return str(plgs.msgRate()) + '/min, ' + 'heart rate: ' + str(plgs.heartRate())  + '/min'
 
 def main():
     pmsgr = '-1/min'
@@ -36,7 +36,7 @@ def main():
             checkMsgLog()
             # 打印小白流量
             nmsgr = getMsgRate()
-            if pmsgr != nmsgr or nmsgr != '0/min':
+            if pmsgr != nmsgr:
                 hakuCore.logging.printLog('速率', nmsgr)
             pmsgr = nmsgr
             # 触发时间事件

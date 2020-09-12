@@ -54,11 +54,15 @@ def main():
 
             if myId != 1009:
                 postBody = postBody.decode('utf-8')
-                hakuCore.logging.printLog('收到', postBody)
                 try:
-                    haku(json.loads(postBody))
+                    postJson = json.loads(postBody)
+                    if postJson.get('post_type') and postJson['post_type'] == 'meta_event' and postJson['meta_event_type'] == 'heartbeat':
+                        pass #不打印心跳
+                    else:
+                        hakuCore.logging.printLog('收到', postBody)
+                    haku(postJson)
                 except:
-                    hakuCore.logging.printLog('ERROR', 'server.py: haku(json.loads(postBody))')
+                    hakuCore.logging.printLog('ERROR', 'server.py: while decode postBody?')
             else:
                 hakuCore.logging.printLog('收到', '收到1009包要求程序退出!')
                 setQuit()
