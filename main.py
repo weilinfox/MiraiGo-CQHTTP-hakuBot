@@ -6,7 +6,6 @@ import os
 import socket
 import time
 import hakuCore.config
-import timer
 import server
 from quitAll import setQuit
 from hakuCore.logging import directPrintLog, startLog
@@ -27,10 +26,10 @@ def sendQuitPackage():
         directPrintLog('Quit package send ERROR!')
 
 def judgeServerStatus():
-    global serverThread, timerThread
-    if timerThread.isAlive() and serverThread.isAlive():
+    global serverThread
+    if serverThread.isAlive():
         return True
-    elif timerThread.isAlive():
+    else:
         directPrintLog("\nserver.py start FAILED!\n")
 
         #重试5次
@@ -56,16 +55,6 @@ def judgeServerStatus():
         directPrintLog('Waiting for threads...')
         while timerThread.isAlive() or serverThread.isAlive():
             time.sleep(1)
-    elif serverThread.isAlive():
-        directPrintLog("\ntimer.py start FAILED!")
-        setQuit()
-        directPrintLog('Quit flag setted.')
-        sendQuitPackage()
-        directPrintLog('Waiting for threads...')
-        while timerThread.isAlive() or serverThread.isAlive():
-            time.sleep(1)
-    else:
-        directPrintLog("\ntimer.py and server.py start FAILED!\n")
         
     return False
 
@@ -126,9 +115,7 @@ directPrintLog("\nCheck for config errors...")
 
 # 启动 server 和 timer
 directPrintLog('Starting service.')
-timerThread = threading.Thread(target=timer.main, daemon=True)
 serverThread = threading.Thread(target=server.main, daemon=True)
-timerThread.start()
 serverThread.start()
 
 # 等待初始化完成
@@ -138,7 +125,7 @@ if judgeServerStatus():
     directPrintLog("Successful! Press Ctrl+C to quit.\n")
     #print(timerThread.isAlive(), serverThread.isAlive())
     try:
-        while timerThread.isAlive() or serverThread.isAlive():
+        while serverThread.isAlive():
             time.sleep(1)
     except KeyboardInterrupt:
         # Ctrl+C 退出
@@ -149,7 +136,7 @@ if judgeServerStatus():
         sendQuitPackage()
 
     directPrintLog('Waiting for threads...')
-    while timerThread.isAlive() or serverThread.isAlive():
+    while serverThread.isAlive():
         time.sleep(1)
 
 

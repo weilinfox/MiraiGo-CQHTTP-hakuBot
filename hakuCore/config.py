@@ -17,4 +17,4 @@ SENDPORT = 5750
 TOKEN = 'inuyasha'
 
 # timer interval seconds (Just an estimation)
-INTERVAL = 10
+INTERVAL = 12

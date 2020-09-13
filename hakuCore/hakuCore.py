@@ -6,6 +6,7 @@
 # 接受、处理并分发 go-cqhttp 传来的 json
 
 from importlib import import_module
+from hakuCore.config import INTERVAL
 import time
 import hakuCore.botApi
 import hakuCore.logging
@@ -16,6 +17,23 @@ VERSION = 'v1.0.12'
 dateStampList = []      # 按日日期戳 [str]
 timeStampList = []      # 按时时间戳 [str]
 dateTimeStampList = []  # 按日期时间戳 [str]
+
+def checkMsgLog():
+    try:
+        plgs = import_module('plugins.log')
+    except:
+        hakuCore.logging.printLog('INFO', 'timer.py: log plugin NOT found')
+    else:
+        plgs.check()
+    return
+
+def getMsgRate():
+    try:
+        plgs = import_module('plugins.log')
+    except:
+        return 'Log plugin NOT found.'
+    else:
+        return str(plgs.msgRate()) + '/min, ' + 'heart rate: ' + str(plgs.heartRate())  + '/min'
 
 def newMsgLog():
     try:
@@ -40,11 +58,7 @@ def haku (msgDict):
     if msgDict.get('raw_message') and msgDict['message_type'] == 'group' and msgDict['raw_message'].count(atMe):
         hakuCore.botApi.send_group_message(msgDict['group_id'], '[CQ:at,qq=' + str(msgDict['user_id']) + ']\n' + '找小白有啥事咩，可以发送":help"获取帮助哦~')
         return
-    
-    if msgDict.get('post_type') and msgDict['post_type'] == 'meta_event':
-        if msgDict.get('meta_event_type') and msgDict['meta_event_type'] == 'heartbeat':
-            newHeartBeat()
-            return
+
     newMsgLog()
 
     # 分发命令
@@ -106,9 +120,27 @@ def haku (msgDict):
             hakuCore.botApi.send_group_message(msgDict['group_id'], '[CQ:at,qq=' + str(msgDict['user_id']) + ']\n' + groupIncreaseReply['else'])
         
 
+pmsgr = '-1/min'
+nmsgr = '0/min'
+checkDelay = 0
 
 def hakuTime():
     global dateStampList, timeStampList, dateTimeStampList
+    global pmsgr, nmsgr, checkDelay
+
+    newHeartBeat() # 心率记录
+    checkMsgLog() # 刷新消息频率缓存
+    checkDelay += 1
+    if checkDelay == INTERVAL * 15:
+        hakuCore.timeEvent.load() # 重载时间事件
+        checkDelay = 0
+    # 打印小白流量
+    nmsgr = getMsgRate()
+    if pmsgr != nmsgr:
+        hakuCore.logging.printLog('速率', nmsgr)
+    pmsgr = nmsgr
+    
+    
     tm = time.gmtime(time.time() + 8*3600)
     try:
         # 按日期通知12点检查 仅群组
