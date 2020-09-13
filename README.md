@@ -73,7 +73,7 @@ ps: 带*为管理员指令，可在插件中分别设置允许的QQ id
 + RECEIVEPORT go-cqhttp上报消息的端口 *
 + SENDPORT cq-cqhttp接受消息的端口 *
 + TIKEN cq-cqhttp的access_token *
-+ INTERVAL 用于定时任务检测时间的间隔
++ INTERVAL 每分钟go-cqhttp发送的心跳个数，默认12
 
 ### 运行
 
@@ -98,9 +98,9 @@ Connect-Length: 0
 
 ```
 
-### 两个线程
+### server.py
 
-``main.py`` 创建了两个线程分别运行 ``server.py`` 和 ``timer.py`` 。 ``server.py`` 监听 go-cqhttp 的上报并将接收到的 json 转换为 dict ； ``timer.py`` 则提取当前时间，当当前时间和设定时间相同时触发相应事件，创建相应的 dict 。这个 dict 会被发送给 ``hakuCore/hakuCore.py`` 处理回应或再将其发送给 plugins 包下的相应插件回应。
+``main.py`` 创建了一个线程运行 ``server.py`` 。 ``server.py`` 监听 go-cqhttp 的上报并将接收到的 json 转换为 dict ，并调用 ``hakuCore/hakuCore.py`` 。如果是心跳，则会调用 ``hakuTime()`` 触发时间时间；反之把 dict 发送给 ``haku()`` 函数处理回应或再将其发送给 plugins 包下的相应插件回应。
 
 ### hakuCore
 
@@ -115,7 +115,7 @@ hakuCore 包是机器人的核心内涵，其中 ``config.py`` 用于参数设�
 + "message" 同"raw_message"
 + "self_id" 机器人自己的qq号
 
-``hakuCore.py`` 主要有两个方法： ``haku()`` 和 ``hakuTime()`` 。 ``haku()`` 负责消息触发的事件， ``server.py`` 收到消息后会传到这里处理； ``hakuTime()`` 则负责时间触发的事件， ``timer.py`` 默认每隔约 10s （在config.py中的INTERVAL设置）会触发 ``hakuTime()`` 一次，该事件由 ``hakuTime()`` 和 ``timeEvent.py`` 协同处理。
+``hakuCore.py`` 主要有两个方法： ``haku()`` 和 ``hakuTime()`` 。 ``haku()`` 负责消息触发的事件， ``server.py`` 收到消息后会传到这里处理； ``hakuTime()`` 则负责时间触发的事件， ``server.py`` 收到心跳后会触发 ``hakuTime()`` 一次，该事件由 ``hakuTime()`` 和 ``timeEvent.py`` 协同处理。
 
 ### timeEvent
 
@@ -158,7 +158,7 @@ hakuCore 包是机器人的核心内涵，其中 ``config.py`` 用于参数设�
 + go-cqhttp 需要交叉编译为 mips64le 。暂时没有官方的 mips64le release。
 + 程序中只是使用 socket 模拟了 http 协议的通信，虽然写 HTTP/1.0 但实际并没有完全遵循任何标准。
 + 不要直接用 print 在终端显示信息，而用 ``hakuCore.logging`` 中的 ``printLog`` 和 ``directPrintLog`` 代替 。
-+ 只有在 ``main.py`` 调用 ``server.py`` 和 ``timer.py`` 时创建了两个线程，所以整个程序是阻塞式的。
++ 整个程序是阻塞式。
 + 不知道哪里的问题，程序退出以后端口并没有立即释放，重启间隔一分钟内会出现端口占用的错误。
 + [我的小文章](https://www.cnblogs.com/weilinfox/p/13466407.html)
 
