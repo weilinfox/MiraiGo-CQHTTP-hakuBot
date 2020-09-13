@@ -12,7 +12,7 @@ import hakuCore.botApi
 import hakuCore.logging
 import hakuCore.timeEvent
 
-VERSION = 'v1.0.12'
+VERSION = 'v1.0.13'
 
 dateStampList = []      # 按日日期戳 [str]
 timeStampList = []      # 按时时间戳 [str]

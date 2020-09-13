@@ -31,9 +31,9 @@ def main (msgDict):
         pass
     lock = True
     if msgDict['message_type'] == 'private':
-        send_private_message(msgDict['user_id'], '流量: ' + str(msgRate())+'/min\n心跳: ' + str(heartRate()))
+        send_private_message(msgDict['user_id'], '流量: ' + str(msgRate())+'/min\n心跳: ' + str(heartRate()*5))
     elif msgDict['message_type'] == 'group':
-        send_group_message(msgDict['group_id'], '流量: ' + str(msgRate())+'/min\n心跳: ' + str(heartRate()))
+        send_group_message(msgDict['group_id'], '流量: ' + str(msgRate())+'/min\n心跳: ' + str(heartRate()*5))
     lock = False
 
 
