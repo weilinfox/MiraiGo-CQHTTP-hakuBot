@@ -57,7 +57,7 @@ def main():
                 try:
                     postJson = json.loads(postBody)
                     if postJson.get('post_type') and postJson['post_type'] == 'meta_event' and postJson['meta_event_type'] == 'heartbeat':
-                        hakuTime() #不打印心跳
+                        hakuTime(postJson) #不打印心跳
                     else:
                         hakuCore.logging.printLog('收到', postBody)
                         haku(postJson)

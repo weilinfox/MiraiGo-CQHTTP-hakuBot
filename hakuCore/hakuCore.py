@@ -122,18 +122,18 @@ def haku (msgDict):
 
 pmsgr = '-1/min'
 nmsgr = '0/min'
-checkDelay = 0
+checkDelay = INTERVAL * 15
 
-def hakuTime():
+def hakuTime(msgDict):
     global dateStampList, timeStampList, dateTimeStampList
     global pmsgr, nmsgr, checkDelay
 
     newHeartBeat() # 心率记录
     checkMsgLog() # 刷新消息频率缓存
-    checkDelay += 1
     if checkDelay == INTERVAL * 15:
         hakuCore.timeEvent.load() # 重载时间事件
         checkDelay = 0
+    checkDelay += 1
     # 打印小白流量
     nmsgr = getMsgRate()
     if pmsgr != nmsgr:
