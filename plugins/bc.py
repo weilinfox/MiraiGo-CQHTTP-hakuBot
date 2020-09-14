@@ -398,7 +398,7 @@ def GETMSG(self):
         else:
             funMod = False
         for s in self:
-            if (s != ":bc" and s != "help" and s != "fun" and s != "funhelp"):
+            if (s[1:] != "bc" and s != "help" and s != "fun" and s != "funhelp"):
                 if (funMod):
                     ans += "\n" + s + " ==> " + funMain(s)
                 else:

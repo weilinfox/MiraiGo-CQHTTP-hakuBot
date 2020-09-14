@@ -6,7 +6,7 @@
 # 接受、处理并分发 go-cqhttp 传来的 json
 
 from importlib import import_module
-from hakuCore.config import INTERVAL
+from hakuCore.config import INTERVAL, PREFIX
 import time
 import hakuCore.botApi
 import hakuCore.logging
@@ -62,7 +62,7 @@ def haku (msgDict):
     newMsgLog()
 
     # 分发命令
-    if (msgDict.get('raw_message') and msgDict['raw_message'][0] == ':'):
+    if (msgDict.get('raw_message') and msgDict['raw_message'][0] == PREFIX):
         req = list(msgDict['raw_message'].split(' ', 1))
         try:
             plgs = import_module('plugins.'+req[0][1:])
@@ -108,7 +108,7 @@ def haku (msgDict):
     # 欢迎新人
     # 指定群回复群号为int 键值为空时不回复指定的群
     groupIncreaseReply = {
-        722237880:'',
+        722237880:'欢迎欢迎！',
         'else':'欢迎欢迎，进了群就是一家人了~'
         }
     if msgDict.get('notice_type') and msgDict['notice_type'] == 'group_increase':

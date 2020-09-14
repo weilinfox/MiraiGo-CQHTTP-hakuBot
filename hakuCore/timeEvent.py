@@ -2,8 +2,10 @@
 # https://github.com/weilinfox/MiraiGo-CQHTTP-hakuBot/blob/master/LICENSE
 
 import os
+import importlib
 import hakuCore.botApi
 import hakuCore.logging
+import hakuCore.config
 
 groupDays = []
 groupTimes = []
@@ -113,6 +115,20 @@ def sendGroupDate(date):
     msgDict = searchGroupDate(daten)
     if len(msgDict) > 0:
         for key in msgDict.keys():
+            msgHead = list(msgDict[key].split())[0]
+            if msgDict[key][0] == hakuCore.config.PREFIX:
+                try:
+                    plgs = importlib.import_module('plugins.' + msgHead[1:])
+                except:
+                    pass
+                else:
+                    try:
+                        nMsgDict = {'group_id':key, 'message':msgDict[key], 'message_type':'group', 'post_type':'message', 'raw_message':msgDict[key], 'post_type':'message'}
+                        plgs.main(nMsgDict)
+                    except:
+                        hakuCore.logging.printLog('ERROR', 'plugins.' + msgHead[1:] + '.py: ERROR occurred in this plugin.')
+                    else:
+                        continue
             hakuCore.botApi.send_group_message(key, msgDict[key])
 
 def sendGroupTime(tm):
@@ -120,6 +136,20 @@ def sendGroupTime(tm):
     msgDict = searchGroupTime(tmn)
     if len(msgDict) > 0:
         for key in msgDict.keys():
+            if msgDict[key][0] == hakuCore.config.PREFIX:
+                msgHead = list(msgDict[key].split())[0]
+                try:
+                    plgs = importlib.import_module('plugins.' + msgHead[1:])
+                except:
+                    pass
+                else:
+                    try:
+                        nMsgDict = {'group_id':key, 'message':msgDict[key], 'message_type':'group', 'post_type':'message', 'raw_message':msgDict[key], 'post_type':'message'}
+                        plgs.main(nMsgDict)
+                    except:
+                        hakuCore.logging.printLog('ERROR', 'plugins.' + msgHead[1:] + '.py: ERROR occurred in this plugin.')
+                    else:
+                        continue
             hakuCore.botApi.send_group_message(key, msgDict[key])
         
 if __name__ == '__main__':

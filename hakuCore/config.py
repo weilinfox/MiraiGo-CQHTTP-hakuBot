@@ -18,3 +18,6 @@ TOKEN = 'inuyasha'
 
 # timer interval seconds (Just an estimation)
 INTERVAL = 12
+
+# command prefix
+PREFIX = ':'
