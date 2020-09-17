@@ -56,7 +56,7 @@ def haku (msgDict):
 
     # 被at
     if msgDict.get('raw_message') and msgDict['message_type'] == 'group' and msgDict['raw_message'].count(atMe):
-        hakuCore.botApi.send_group_message(msgDict['group_id'], '[CQ:at,qq=' + str(msgDict['user_id']) + ']\n' + '找小白有啥事咩，可以发送":help"获取帮助哦~')
+        hakuCore.botApi.send_group_message(msgDict['group_id'], '[CQ:at,qq=' + str(msgDict['user_id']) + ']\n' + '找小白有啥事咩，可以发送"' + PREFIX + 'help"获取帮助哦~')
         return
 
     newMsgLog()

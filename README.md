@@ -29,6 +29,7 @@ haku-bot，小白哥哥：具有灵活的插件机制，利用go-cqhttp在龙芯
 + bc 简单的四则运算计算器
 + music 网易云音乐搜索
 + qqmusic qq音乐搜索
++ yiyan 一言搜索
 + log 计量机器人的流量
 + timertest* 自动提醒测试
 + atall* 群发消息
@@ -56,6 +57,7 @@ ps: 带*为管理员指令，可在插件中分别设置允许的QQ id
 ### 插件额外依赖
 
 + qqmusic: requests
++ yiyan: requests
 
 ## 目的
 
@@ -74,6 +76,7 @@ ps: 带*为管理员指令，可在插件中分别设置允许的QQ id
 + SENDPORT cq-cqhttp接受消息的端口 *
 + TIKEN cq-cqhttp的access_token *
 + INTERVAL 每分钟go-cqhttp发送的心跳个数，默认12
++ PROFIX 命令前缀设置，默认 ``':'`` (不包含引号)
 
 ### 运行
 
