@@ -29,7 +29,7 @@ haku-bot，小白哥哥：具有灵活的插件机制，利用go-cqhttp在龙芯
 + bc 简单的四则运算计算器
 + music 网易云音乐搜索
 + qqmusic qq音乐搜索
-+ weather 和风天气实施
++ weather 和风天气实时
 + forecast 和风天气预报
 + yiyan 一言搜索
 + log 返回小白的状态

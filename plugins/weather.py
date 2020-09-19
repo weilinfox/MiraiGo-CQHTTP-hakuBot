@@ -7,7 +7,7 @@ import requests
 import json
 
 def main (msgDict):
-    KEY = '1e28985ffb924281bb233fd89d947401' #和风天气key
+    KEY = '' #和风天气key
     helpMsg = '小白会试着搜索指定地区天气~\nweather 城市/地区\nweather 城市 地区'
     req = list(msgDict['raw_message'].split())
     for i in range(0, len(req)):
