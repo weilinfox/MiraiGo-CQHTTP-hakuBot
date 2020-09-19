@@ -37,6 +37,7 @@ def main (msgDict):
                     rejson = json.loads(resp.text)
                     print(rejson)
                     ans = province + '-' + city + ' ' + rejson['daily'][days]['textDay'] \
+                            + '\n' + rejson['daily'][days]['fxDate'] \
                             + '\n气温:' + rejson['daily'][days]['tempMin'] + '-' + rejson['daily'][days]['tempMax'] + '℃' \
                             + '\n风向:' + rejson['daily'][days]['windDirDay'] + ' 风力:' + rejson['daily'][days]['windScaleDay'] + '级' \
                             + '\n风速:' + rejson['daily'][days]['windSpeedDay'] + 'km/h 气压:' + rejson['daily'][days]['pressure'] + 'hPa'

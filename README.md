@@ -58,7 +58,7 @@ ps: 带*为管理员指令，可在插件中分别设置允许的QQ id
 
 ### 插件额外依赖
 
-+ requests: qqmusic, yiyan, weather
++ requests: qqmusic, yiyan, weather, forecast
 
 ## 目的
 
