@@ -14,16 +14,18 @@ def main (msgDict):
         ans = helpMsg
     else:
         try:
-            resp = requests.get(url='https://v1.hitokoto.cn/',params={'c':'j'})
+            #resp = requests.get(url='https://v1.hitokoto.cn/',params={'c':'j'})
+            resp = requests.get(url='http://api.heerdev.top:4995/nemusic/random')
             if resp.status_code == 200:
                 rejson = json.loads(resp.text)
                 # print(rejson)
-                ans = rejson['hitokoto']
+                #ans = rejson['hitokoto']
+                ans = rejson['text']
             else:
                 ans = '好像返回了奇怪的东西: ' + str(resp.status_code)
         except Exception as e:
             hakuCore.logging.printLog('ERROR', 'plugin.wyy: ' + str(e))
-            ans = '啊嘞嘞好像出错了，一定是一言炸了不关小白！'
+            ans = '啊嘞嘞好像出错了，一定是wyy炸了不关小白！'
 
     if msgDict['message_type'] == 'private':
             send_private_message(msgDict['user_id'], ans)
