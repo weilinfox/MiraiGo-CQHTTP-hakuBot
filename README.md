@@ -30,7 +30,7 @@ haku-bot，小白哥哥：具有灵活的插件机制，利用go-cqhttp在龙芯
 + music 网易云音乐搜索
 + qqmusic qq音乐搜索
 + yiyan 一言搜索
-+ log 计量机器人的流量
++ log 返回小白的状态
 + timertest* 自动提醒测试
 + atall* 群发消息
 
@@ -163,7 +163,6 @@ hakuCore 包是机器人的核心内涵，其中 ``config.py`` 用于参数设�
 + go-cqhttp 需要交叉编译为 mips64le 。暂时没有官方的 mips64le release。
 + 程序中只是使用 socket 模拟了 http 协议的通信，虽然写 HTTP/1.0 但实际并没有完全遵循任何标准。
 + 不要直接用 print 在终端显示信息，而用 ``hakuCore.logging`` 中的 ``printLog`` 和 ``directPrintLog`` 代替 。
-+ 整个程序是阻塞式。
 + 不知道哪里的问题，程序退出以后端口并没有立即释放，重启间隔一分钟内会出现端口占用的错误。
 + [我的小文章](https://www.cnblogs.com/weilinfox/p/13466407.html)
 

@@ -113,7 +113,7 @@ startLog()
 # 配置文件检查
 directPrintLog("\nCheck for config errors...")
 
-# 启动 server 和 timer
+# 启动 server
 directPrintLog('Starting service.')
 serverThread = threading.Thread(target=server.main, daemon=True)
 serverThread.start()

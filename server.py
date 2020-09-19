@@ -6,7 +6,7 @@ import json
 import hakuCore.logging
 from time import strftime, gmtime, sleep
 from hakuCore.config import HOST, RECEIVEPORT, BUF_SIZE
-from hakuCore.hakuCore import haku, hakuTime
+from hakuCore.hakuCore import haku, hakuHeart
 from quitAll import quitNow, setQuit
 
 def main():
@@ -57,7 +57,7 @@ def main():
                 try:
                     postJson = json.loads(postBody)
                     if postJson.get('post_type') and postJson['post_type'] == 'meta_event' and postJson['meta_event_type'] == 'heartbeat':
-                        hakuTime(postJson) #不打印心跳
+                        hakuHeart(postJson) #不打印心跳
                     else:
                         hakuCore.logging.printLog('收到', postBody)
                         haku(postJson)

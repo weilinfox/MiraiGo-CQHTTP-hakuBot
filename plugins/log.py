@@ -6,6 +6,8 @@ from hakuCore.botApi import *
 
 recordMsg = []
 heartbeats = []
+threadSum = 0
+threadTimeOut = 0
 lock = False
 
 def msgRate():
@@ -17,6 +19,8 @@ def heartRate():
     return len(heartbeats)
 
 def main (msgDict):
+    global threadSum, threadTimeOut
+    
     msgList = list(msgDict['raw_message'].split())
     if len(msgList) > 1 and msgList[1].strip() == 'help':
         helpMsg = '可以查看小白的状态哦~'
@@ -31,9 +35,9 @@ def main (msgDict):
         pass
     lock = True
     if msgDict['message_type'] == 'private':
-        send_private_message(msgDict['user_id'], '流量: ' + str(msgRate())+'/min\n心跳: ' + str(heartRate()*5))
+        send_private_message(msgDict['user_id'], '流量: ' + str(msgRate())+'/min\n心跳: ' + str(heartRate()*5) + '\n线程: ' + str(threadSum) + '\n异常: ' + str(threadTimeOut))
     elif msgDict['message_type'] == 'group':
-        send_group_message(msgDict['group_id'], '流量: ' + str(msgRate())+'/min\n心跳: ' + str(heartRate()*5))
+        send_group_message(msgDict['group_id'], '流量: ' + str(msgRate())+'/min\n心跳: ' + str(heartRate()*5) + '\n线程: ' + str(threadSum) + '\n异常: ' + str(threadTimeOut))
     lock = False
 
 
@@ -72,3 +76,8 @@ def heartBeats():
     lock = True
     heartbeats.append(ntime)
     lock = False
+    
+def threadStatus(thr, timeout):
+    global threadSum, threadTimeOut
+    threadSum = thr
+    threadTimeOut = timeout

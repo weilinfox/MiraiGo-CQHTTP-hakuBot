@@ -8,21 +8,23 @@
 from importlib import import_module
 from hakuCore.config import INTERVAL, PREFIX
 import time
+import threading
 import hakuCore.botApi
 import hakuCore.logging
 import hakuCore.timeEvent
 
-VERSION = 'v1.0.13'
+VERSION = 'v1.0.14'
 
 dateStampList = []      # 按日日期戳 [str]
 timeStampList = []      # 按时时间戳 [str]
 dateTimeStampList = []  # 按日期时间戳 [str]
+threadDict = {}         # 线程字典 {thread:time}
 
 def checkMsgLog():
     try:
         plgs = import_module('plugins.log')
     except:
-        hakuCore.logging.printLog('INFO', 'timer.py: log plugin NOT found')
+        hakuCore.logging.printLog('INFO', 'hakuCore.py: log plugin NOT found')
     else:
         plgs.check()
     return
@@ -39,7 +41,7 @@ def newMsgLog():
     try:
         plgs = import_module('plugins.log')
     except:
-        hakuCore.logging.printLog('ERROR', 'hakuCore.py: in newMsgLog()')
+        hakuCore.logging.printLog('INFO', 'hakuCore.py: log plugin NOT found')
     else:
         plgs.insert()
 
@@ -47,11 +49,19 @@ def newHeartBeat():
     try:
         plgs = import_module('plugins.log')
     except:
-        hakuCore.logging.printLog('ERROR', 'hakuCore.py: in newHeartBeat()')
+        hakuCore.logging.printLog('INFO', 'hakuCore.py: log plugin NOT found')
     else:
         plgs.heartBeats()
 
-def haku (msgDict):
+def threadInfo(thr, timeout):
+    try:
+        plgs = import_module('plugins.log')
+    except:
+        hakuCore.logging.printLog('INFO', 'hakuCore.py: log plugin NOT found')
+    else:
+        plgs.threadStatus(thr, timeout)
+
+def hakuMain (msgDict):
     atMe = '[CQ:at,qq=' + str(msgDict['self_id']) + ']' # haku被at的cq码
 
     # 被at
@@ -118,18 +128,34 @@ def haku (msgDict):
             pass
         elif groupIncreaseReply.get('else') != None and len(groupIncreaseReply['else']) > 0:
             hakuCore.botApi.send_group_message(msgDict['group_id'], '[CQ:at,qq=' + str(msgDict['user_id']) + ']\n' + groupIncreaseReply['else'])
-        
+
+def haku(MsgDict):
+    global threadDict
+
+    hakuThread = threading.Thread(target=hakuMain, args=[MsgDict], daemon=True)
+    threadDict.update({hakuThread:time.time()})
+    hakuThread.start()
+
 
 pmsgr = '-1/min'
 nmsgr = '0/min'
 checkDelay = INTERVAL * 15
 
-def hakuTime(msgDict):
-    global dateStampList, timeStampList, dateTimeStampList
+def hakuHeart(msgDict):
+    global dateStampList, timeStampList, dateTimeStampList, threadDict
     global pmsgr, nmsgr, checkDelay
 
     newHeartBeat() # 心率记录
     checkMsgLog() # 刷新消息频率缓存
+    timeOutThr = 0 # 超时线程
+    for thr in list(threadDict.keys()):
+        if not thr.isAlive():
+            threadDict.pop(thr)
+        elif time.time() - threadDict[thr] >= 10:
+            timeOutThr += 1
+    if timeOutThr > 0:
+        hakuCore.logging.printLog('WARNING', str(timeOutThr) + ' threads are detected timeout')
+    threadInfo(len(threadDict), timeOutThr) # 线程池数据记录
     if checkDelay == INTERVAL * 15:
         hakuCore.timeEvent.load() # 重载时间事件
         checkDelay = 0
@@ -139,8 +165,8 @@ def hakuTime(msgDict):
     if pmsgr != nmsgr:
         hakuCore.logging.printLog('速率', nmsgr)
     pmsgr = nmsgr
-    
-    
+
+
     tm = time.gmtime(time.time() + 8*3600)
     try:
         # 按日期通知12点检查 仅群组
