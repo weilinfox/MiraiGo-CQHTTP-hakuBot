@@ -13,6 +13,8 @@ echo [args]
 help
 music [args]
 qqmusic [args]
+weather [args]
+forecast [args]
 yiyan [args]
 log [args]
 ping

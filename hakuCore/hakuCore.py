@@ -62,6 +62,10 @@ def threadInfo(thr, timeout):
         plgs.threadStatus(thr, timeout)
 
 def hakuMain (msgDict):
+    blockUser = [3405637452]
+    if msgDict.get('user_id') and blockUser.count(msgDict['user_id']):
+        return
+    
     atMe = '[CQ:at,qq=' + str(msgDict['self_id']) + ']' # haku被at的cq码
 
     # 被at
