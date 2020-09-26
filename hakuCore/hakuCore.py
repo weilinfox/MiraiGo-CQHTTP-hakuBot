@@ -122,7 +122,7 @@ def hakuMain (msgDict):
     # 欢迎新人
     # 指定群回复群号为int 键值为空时不回复指定的群
     groupIncreaseReply = {
-        722237880:'欢迎欢迎！',
+        722237880:'',
         'else':'欢迎欢迎，进了群就是一家人了~'
         }
     if msgDict.get('notice_type') and msgDict['notice_type'] == 'group_increase':
@@ -177,7 +177,10 @@ def hakuHeart(msgDict):
         if tm.tm_hour == 0 and tm.tm_min == 0:
             tmstmp = time.strftime("%02m%02d", tm)
             if not dateStampList.count(tmstmp):
-                hakuCore.timeEvent.sendGroupDate(tmstmp)
+                hakuThread = threading.Thread(target=hakuCore.timeEvent.sendGroupDate, args=[tmstmp], daemon=True)
+                threadDict.update({hakuThread:time.time()})
+                hakuThread.start()
+                #hakuCore.timeEvent.sendGroupDate(tmstmp)
                 dateStampList.append(tmstmp)
         else:
             if len(dateStampList) > 0:
@@ -186,7 +189,10 @@ def hakuHeart(msgDict):
         # 每分钟检查 仅群组
         tmstmp = time.strftime("%02H%02M", tm)
         if not timeStampList.count(tmstmp):
-            hakuCore.timeEvent.sendGroupTime(tmstmp)
+            hakuThread = threading.Thread(target=hakuCore.timeEvent.sendGroupTime, args=[tmstmp], daemon=True)
+            threadDict.update({hakuThread:time.time()})
+            hakuThread.start()
+            #hakuCore.timeEvent.sendGroupTime(tmstmp)
             timeStampList = [tmstmp]
                 
     except:

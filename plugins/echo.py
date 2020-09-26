@@ -39,7 +39,7 @@ qaq'''
             if ans == 0:
                 respond = '汝不会念嘛~\n' + req[1]
             elif ans == 1:
-                respond = '小白是不会逃避的!'
+                respond = '小白是不会逃避的!\n' + req[1]
             else:
                 respond = req[1]
             send_group_message(msgDict['group_id'], respond)
