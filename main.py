@@ -119,7 +119,7 @@ serverThread = threading.Thread(target=server.main, daemon=True)
 serverThread.start()
 
 # 等待初始化完成
-time.sleep(2)
+#time.sleep(2)
 
 if judgeServerStatus():
     directPrintLog("Successful! Press Ctrl+C to quit.\n")

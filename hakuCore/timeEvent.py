@@ -87,21 +87,43 @@ def searchGroupDate(date):
     # int date(mmdd)
     global groupDays
     ans = {}
+    com = {}
     for grps in groupDays:
         grpstr = searchGroup('groupDay', grps, date)
         if len(grpstr) > 0:
-            ans.update({int(grps):grpstr})
-    return ans
+            grplist = list(grpstr.split('\n'))
+            message = ''
+            command = []
+            for s in grplist:
+                if s[0] == hakuCore.config.PREFIX:
+                    command.append(s)
+                else:
+                    if len(message) == 0: message = s
+                    else: message += '\n' + s
+            if len(message) > 0: ans.update({int(grps):message})
+            if len(command) > 0: com.update({int(grps):command})
+    return [ans,com]
 
 def searchGroupTime(tm):
     # int tm(hhmm)
     global groupTimes
     ans = {}
+    com = {}
     for grps in groupTimes:
         grpstr = searchGroup('groupTime', grps, tm)
         if len(grpstr) > 0:
-            ans.update({int(grps):grpstr})
-    return ans
+            grplist = list(grpstr.split('\n'))
+            message = ''
+            command = []
+            for s in grplist:
+                if s[0] == hakuCore.config.PREFIX:
+                    command.append(s)
+                else:
+                    if len(message) == 0: message = s
+                    else: message += '\n' + s
+            if len(message) > 0: ans.update({int(grps):message})
+            if len(command) > 0: com.update({int(grps):command})
+    return [ans,com]
 
 #def sendGroup(dirname, grps, date):
 #    groupNo = int(grps)
@@ -113,44 +135,44 @@ def searchGroupTime(tm):
 def sendGroupDate(date):
     daten = int(date)
     msgDict = searchGroupDate(daten)
-    if len(msgDict) > 0:
-        for key in msgDict.keys():
-            msgHead = list(msgDict[key].split())[0]
-            if msgDict[key][0] == hakuCore.config.PREFIX:
+    if len(msgDict[0]) > 0:
+        for key in msgDict[0].keys():
+            hakuCore.botApi.send_group_message(key, msgDict[0][key])
+    if len(msgDict[1]) > 0:
+        for key in msgDict[1].keys():
+            for com in msgDict[1][key]:
+                msgHead = list(com.split())[0]
                 try:
                     plgs = importlib.import_module('plugins.' + msgHead[1:])
                 except:
-                    pass
+                    hakuCore.logging.printLog('ERROR', 'plugins.' + msgHead[1:] + '.py: no such plugin.')
                 else:
                     try:
-                        nMsgDict = {'group_id':key, 'message':msgDict[key], 'message_type':'group', 'post_type':'message', 'raw_message':msgDict[key], 'post_type':'message'}
+                        nMsgDict = {'group_id':key, 'message':com, 'message_type':'group', 'post_type':'message', 'raw_message':com, 'post_type':'message'}
                         plgs.main(nMsgDict)
                     except:
                         hakuCore.logging.printLog('ERROR', 'plugins.' + msgHead[1:] + '.py: ERROR occurred in this plugin.')
-                    else:
-                        continue
-            hakuCore.botApi.send_group_message(key, msgDict[key])
 
 def sendGroupTime(tm):
     tmn = int(tm)
     msgDict = searchGroupTime(tmn)
-    if len(msgDict) > 0:
-        for key in msgDict.keys():
-            if msgDict[key][0] == hakuCore.config.PREFIX:
-                msgHead = list(msgDict[key].split())[0]
+    if len(msgDict[0]) > 0:
+        for key in msgDict[0].keys():
+            hakuCore.botApi.send_group_message(key, msgDict[0][key])
+    if len(msgDict[1]) > 0:
+        for key in msgDict[1].keys():
+            for com in msgDict[1][key]:
+                msgHead = list(com.split())[0]
                 try:
                     plgs = importlib.import_module('plugins.' + msgHead[1:])
                 except:
-                    pass
+                    hakuCore.logging.printLog('ERROR', 'plugins.' + msgHead[1:] + '.py: no such plugin.')
                 else:
                     try:
-                        nMsgDict = {'group_id':key, 'message':msgDict[key], 'message_type':'group', 'post_type':'message', 'raw_message':msgDict[key], 'post_type':'message'}
+                        nMsgDict = {'group_id':key, 'message':com, 'message_type':'group', 'post_type':'message', 'raw_message':com, 'post_type':'message'}
                         plgs.main(nMsgDict)
                     except:
                         hakuCore.logging.printLog('ERROR', 'plugins.' + msgHead[1:] + '.py: ERROR occurred in this plugin.')
-                    else:
-                        continue
-            hakuCore.botApi.send_group_message(key, msgDict[key])
         
 if __name__ == '__main__':
     load()

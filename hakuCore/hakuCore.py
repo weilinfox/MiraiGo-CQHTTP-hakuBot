@@ -62,7 +62,7 @@ def threadInfo(thr, timeout):
         plgs.threadStatus(thr, timeout)
 
 def hakuMain (msgDict):
-    blockUser = [3405637452]
+    blockUser = [3405637452, 805469904, 806009825]
     if msgDict.get('user_id') and blockUser.count(msgDict['user_id']):
         return
     
