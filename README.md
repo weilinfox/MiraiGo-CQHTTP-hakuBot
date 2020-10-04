@@ -31,6 +31,7 @@ haku-bot，小白哥哥：具有灵活的插件机制，利用go-cqhttp在龙芯
 + qqmusic qq音乐搜索
 + weather 和风天气实时
 + forecast 和风天气预报
++ run glot代码在线运行
 + yiyan 一言搜索
 + log 返回小白的状态
 + timertest* 自动提醒测试
@@ -58,7 +59,7 @@ ps: 带*为管理员指令，可在插件中分别设置允许的QQ id
 
 ### 插件额外依赖
 
-+ requests: qqmusic, yiyan, weather, forecast
++ requests: qqmusic, yiyan, weather, forecast, run
 
 ## 目的
 
