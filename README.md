@@ -108,7 +108,7 @@ Connect-Length: 0
 
 ### hakuCore
 
-hakuCore 包是机器人的核心内涵，其中 ``config.py`` 用于参数设置， ``hakuCore.py`` 对所有信息进行处理和分发， ``botApi.py`` 作为回应 go-cqhttp 的接口， ``tcpSend.py`` （通常不需要手动调用）向 go-cqhttp 发送包， ``logging.py`` 打印和记录日志以及自动复读机的实现， ``timeEvent.py`` 读取时间事件相关文件。
+hakuCore 包是机器人的核心内涵，其中 ``config.py`` 用于参数设置， ``hakuCore.py`` 对所有信息进行处理和分发， ``botApi.py`` 作为回应 go-cqhttp 的接口， ``tcpSend.py`` （通常不需要手动调用）向 go-cqhttp 发送包， ``logging.py`` 打印和记录日志以及自动复读机的实现， ``timeEvent.py`` 读取时间事件相关文件， ``authorisasion.py`` 是小白的所有权利（token/key）。
 
 ``hakuCore.py`` 接受一个 dict ，这个 dict 和 go-cqhttp 上报的 json 格式一致，主要包含：
 
@@ -119,7 +119,7 @@ hakuCore 包是机器人的核心内涵，其中 ``config.py`` 用于参数设�
 + "message" 同"raw_message"
 + "self_id" 机器人自己的qq号
 
-``hakuCore.py`` 主要有两个方法： ``haku()`` 和 ``hakuHeart()`` 。 ``haku()`` 负责消息触发的事件， ``server.py`` 收到消息后会传到这里处理； ``hakuHeart()`` 则负责时间触发的事件， ``server.py`` 收到心跳后会触发 ``hakuHeart()`` 一次，该事件由 ``hakuHeart()`` 和 ``timeEvent.py`` 协同处理。
+``hakuCore.py`` 主要有两个方法： ``haku()`` 和 ``hakuHeart()`` 。 ``haku()`` 负责消息触发的事件， ``server.py`` 收到消息后会传到这里处理； ``hakuHeart()`` 则负责时间触发的事件， ``server.py`` 收到心跳后会触发 ``hakuHeart()`` 一次，该事件由 ``hakuHeart()`` 和 ``timeEvent.py`` 协同处理。所有线程都在这里产生、灭亡和销毁。
 
 ### timeEvent
 

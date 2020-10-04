@@ -2,12 +2,13 @@
 # https://github.com/weilinfox/MiraiGo-CQHTTP-hakuBot/blob/master/LICENSE
 
 from hakuCore.botApi import *
+from hakuCore.authorisasion import HEKEY
 import hakuCore.logging
 import requests
 import json
 
 def main (msgDict):
-    KEY = '' #和风天气key
+    KEY = HEKEY #和风天气key
     helpMsg = '小白会试着搜索指定地区天气~\nforecast 城市 地区 n日后\n0>=n>=2'
     req = list(msgDict['raw_message'].split())
     for i in range(0, len(req)):
