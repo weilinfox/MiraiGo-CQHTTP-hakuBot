@@ -17,7 +17,7 @@ def glotLang():
 
 
 def main(msgDict):
-    msgList = list(msgDict['raw_message'].strip().split(' ', 2))
+    msgList = list(msgDict['raw_message'].split())
     ans = ''
     LANG = ''
     if len(msgList) == 1:
@@ -35,8 +35,21 @@ def main(msgDict):
             else:
                 ans = lang + 'は何か　知らない。'
     else:
-        lang = msgList[1].strip()
-        content = msgList[2]
+        lang = msgList[1]
+        pos = 0
+        flag = 1
+        spcont = 0
+        space = [' ', '\n', '\t']
+        for ch in msgDict['raw_message'].strip():
+            pos += 1
+            if space.count(s):
+                if flag:
+                    flag = 0
+                    spcont += 1
+            else:
+                if not flag: flag = 1
+            if spcont == 2: break
+        content = msgDict['raw_message'].strip()[pos:]
         
         try :
             LANG = glotLang()
