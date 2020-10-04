@@ -69,7 +69,7 @@ def main(msgDict):
                 }
                 data = {
                     "files": [{
-                        "name": 'hakuScript',
+                        "name": 'hakuScript.' + lang,
                         "content": content
                     }]
                 }
