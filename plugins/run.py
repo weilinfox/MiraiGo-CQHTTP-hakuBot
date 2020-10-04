@@ -40,7 +40,7 @@ def main(msgDict):
         flag = 1
         spcont = 0
         space = [' ', '\n', '\t']
-        for ch in msgDict['raw_message'].strip():
+        for s in msgDict['raw_message'].strip():
             pos += 1
             if space.count(s):
                 if flag:
