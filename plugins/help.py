@@ -4,20 +4,18 @@
 def main (msgDict):
     helpMsg = '''小白现在懂得这些命令了哦:
 [命令] help 获取帮助～
-*开头的是管理员指令!
 about
+help
 bc [args]
 echo [args]
-help
 music [args]
 qqmusic [args]
 weather [args]
 forecast [args]
 yiyan [args]
+run [args]
 log [args]
 ping
-time [args]
-*atall [args]
-*timertest [args]'''
+time [args]'''
     return helpMsg
  
