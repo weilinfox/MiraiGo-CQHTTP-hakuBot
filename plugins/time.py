@@ -2,7 +2,6 @@
 # https://github.com/weilinfox/MiraiGo-CQHTTP-hakuBot/blob/master/LICENSE
 
 import time
-from hakuCore.botApi import *
 
 def main (msgDict):
     helpMsg = '''小白还是知道北京时间的～
@@ -26,16 +25,10 @@ def main (msgDict):
         else:
             ans += '\nUTC'
 
-    if msgDict['message_type'] == 'private':
-        if (len(req) > 1 and req[1].strip() == 'help'):
-            send_private_message(msgDict['user_id'], helpMsg)
-        else:
-            send_private_message(msgDict['user_id'], ans)
-    elif msgDict['message_type'] == 'group':
-        if (len(req) > 1 and req[1].strip() == 'help'):
-            send_group_message(msgDict['group_id'], helpMsg)
-        else:
-            send_group_message(msgDict['group_id'], ans)
+    if (len(req) > 1 and req[1].strip() == 'help'):
+        return helpMsg
+    else:
+        return ans
 
 #if __name__ == '__main__':
 #    main({'message_type':'private', 'user_id':-1, 'raw_message':':time'})

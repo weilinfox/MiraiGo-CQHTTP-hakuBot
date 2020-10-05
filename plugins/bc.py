@@ -11,7 +11,6 @@
 
 
 import math
-from hakuCore.botApi import *
 
 divError = False
 overflowError = False
@@ -408,10 +407,7 @@ def GETMSG(self):
 def main (msgDict):
     self = list(msgDict['raw_message'].split())
     retn = GETMSG(self)
-    if msgDict['message_type'] == 'private':
-        send_private_message(msgDict['user_id'], retn)
-    elif msgDict['message_type'] == 'group':
-        send_group_message(msgDict['group_id'], retn)
+    return retn
 
 
 #代码段

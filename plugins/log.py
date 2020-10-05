@@ -2,7 +2,6 @@
 # https://github.com/weilinfox/MiraiGo-CQHTTP-hakuBot/blob/master/LICENSE
 
 import time
-from hakuCore.botApi import *
 
 recordMsg = []
 heartbeats = []
@@ -23,22 +22,15 @@ def main (msgDict):
     
     msgList = list(msgDict['raw_message'].split())
     if len(msgList) > 1 and msgList[1].strip() == 'help':
-        helpMsg = '可以查看小白的状态哦~'
-        if msgDict['message_type'] == 'private':
-            send_private_message(msgDict['user_id'], helpMsg)
-        elif msgDict['message_type'] == 'group':
-            send_group_message(msgDict['group_id'], helpMsg)
-        return
+        return '可以查看小白的状态哦~'
 
     global lock, recordMsg, heartbeats
     while lock:
         pass
     lock = True
-    if msgDict['message_type'] == 'private':
-        send_private_message(msgDict['user_id'], '流量: ' + str(msgRate())+'/min\n心跳: ' + str(heartRate()*5) + '\n线程: ' + str(threadSum) + '\n异常: ' + str(threadTimeOut))
-    elif msgDict['message_type'] == 'group':
-        send_group_message(msgDict['group_id'], '流量: ' + str(msgRate())+'/min\n心跳: ' + str(heartRate()*5) + '\n线程: ' + str(threadSum) + '\n异常: ' + str(threadTimeOut))
+    rmsg = '流量: ' + str(msgRate())+'/min\n心跳: ' + str(heartRate()*5) + '\n线程: ' + str(threadSum) + '\n异常: ' + str(threadTimeOut)
     lock = False
+    return rmsg
 
 
 def check():

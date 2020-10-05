@@ -13,7 +13,7 @@ import hakuCore.botApi
 import hakuCore.logging
 import hakuCore.timeEvent
 
-VERSION = 'v1.0.14'
+VERSION = 'v1.0.15'
 
 dateStampList = []      # 按日日期戳 [str]
 timeStampList = []      # 按时时间戳 [str]
@@ -85,9 +85,14 @@ def hakuMain (msgDict):
             return
         else:
             try:
-                plgs.main(msgDict)
+                plgMsg = plgs.main(msgDict)
+                if isinstance(plgMsg, str) and len(plgMsg) > 0:
+                    if msgDict['message_type'] == 'private':
+                        hakuCore.botApi.send_private_message(msgDict['user_id'], plgMsg)
+                    elif msgDict['message_type'] == 'group':
+                        hakuCore.botApi.send_group_message(msgDict['group_id'], plgMsg) 
             except:
-                hakuCore.logging.printLog('ERROR', 'plugins.' + req[0][1:] + '.py: ERROR occurred in this plugin.')
+                hakuCore.logging.printLog('ERROR', 'plugins.' + req[0][1:] + '.py: ERROR occurred while calling this plugin.')
             return
 
     # 命令以外的处理
