@@ -2,6 +2,8 @@
 
 haku-bot，小白哥哥：面向过程的，利用go-cqhttp在龙芯和其他平台快速构建的QQ机器人。
 
+接下来将致力于将其用C语言重写，故此后该项目将不会有较大的更新。
+
 ## 实现的功能
 
 ### 主程序
@@ -17,7 +19,7 @@ haku-bot，小白哥哥：面向过程的，利用go-cqhttp在龙芯和其他平
 9. 欢迎新人
 10. 被at回复
 
-已经函数实现的 api 见 hakuCore/botApi.py
+已经函数实现的 api 见 hakuCore/botApi.py ，未实现的可以自行实现，具体参照 go-cqhttp 的 http 请求格式即可。
 
 ### 插件
 

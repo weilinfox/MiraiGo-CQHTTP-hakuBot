@@ -15,7 +15,7 @@ def startLog():
             logNo += 1
         os.rename('data/log/haku.log', 'data/log/haku.log.'+str(logNo))
     writeFile = open('data/log/haku.log', 'w')
-    writeFile.write('[ ' + strftime("%a, %m %b %Y %H:%M:%S GMT", gmtime()) \
+    writeFile.write('[ ' + strftime("%a, %d %b %Y %H:%M:%S GMT", gmtime()) \
                         + ' ](启动): 开始记录日志')
     writeFile.close()
 
@@ -30,7 +30,7 @@ def logging(logInfo):
     logFileLock = False
 
 def printLog(logType, logInfo):
-    logStr = '\n[ ' + strftime("%a, %m %b %Y %H:%M:%S GMT", gmtime()) \
+    logStr = '\n[ ' + strftime("%a, %d %b %Y %H:%M:%S GMT", gmtime()) \
                 + ' ](' + logType + '): ' + logInfo
     print(logStr)
     logging(logStr)

@@ -149,7 +149,8 @@ def sendGroupDate(date):
                 else:
                     try:
                         nMsgDict = {'group_id':key, 'message':com, 'message_type':'group', 'post_type':'message', 'raw_message':com, 'post_type':'message'}
-                        plgs.main(nMsgDict)
+                        plgMsg = plgs.main(nMsgDict)
+                        hakuCore.botApi.send_group_message(key, plgMsg)
                     except:
                         hakuCore.logging.printLog('ERROR', 'plugins.' + msgHead[1:] + '.py: ERROR occurred in this plugin.')
 
@@ -170,7 +171,8 @@ def sendGroupTime(tm):
                 else:
                     try:
                         nMsgDict = {'group_id':key, 'message':com, 'message_type':'group', 'post_type':'message', 'raw_message':com, 'post_type':'message'}
-                        plgs.main(nMsgDict)
+                        plgMsg = plgs.main(nMsgDict)
+                        hakuCore.botApi.send_group_message(key, plgMsg)
                     except:
                         hakuCore.logging.printLog('ERROR', 'plugins.' + msgHead[1:] + '.py: ERROR occurred in this plugin.')
         
