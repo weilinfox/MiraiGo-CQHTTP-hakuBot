@@ -9,7 +9,7 @@ def main (msgDict):
     req = list(msgDict['raw_message'].split())
     for i in range(0, len(req)):
         req[i] = req[i].strip()
-    if i < 2:
+    if i == 0:
         ans = helpMsg
     else:
         ans = '[CQ:image,file=http://wttr.in/' + req[1] + '_tqp0_lang=en.png]'
