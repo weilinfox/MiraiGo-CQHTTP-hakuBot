@@ -33,6 +33,7 @@ haku-bot，小白哥哥：面向过程的，利用go-cqhttp在龙芯和其他平
 + qqmusic qq音乐搜索
 + weather 和风天气实时
 + forecast 和风天气预报
++ wttrin wttr.in
 + run glot代码在线运行
 + yiyan 一言搜索
 + log 返回小白的状态
@@ -61,7 +62,7 @@ ps: 带*为管理员指令，可在插件中分别设置允许的QQ id
 
 ### 插件额外依赖
 
-+ requests: qqmusic, yiyan, weather, forecast, run
++ requests: qqmusic, yiyan, weather, forecast, wttrin, run
 
 ## 目的
 
