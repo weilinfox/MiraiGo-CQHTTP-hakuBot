@@ -2,7 +2,10 @@
 
 haku-bot，小白哥哥：面向过程的，利用go-cqhttp在龙芯和其他平台快速构建的QQ机器人。
 
+我重写了他，在这里 [py-hakuBot](https://github.com/weilinfox/py-hakuBot)
+
 啊，其实我也不知道自己写了啥，（写的啥玩意哦///）
+
 重新再整整吧...
 
 ## 实现的功能
